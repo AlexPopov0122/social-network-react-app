@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+@import "./resets/normalize";
+@import "./resets/resetlocal";
+
+.app-wrapper {
+  display: grid;
+  grid-template-rows: 96px 1fr;
+  grid-template-columns: 280px 1fr 290px;
+  grid-template-areas: 
+  "header header header"
+   "nav content navRight";
+   font-size: 30px;
+   margin: 0 auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+  grid-area: header;
+  background-color: aqua;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.header img {
+  width: 20px;
+  height: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.nav {
+  grid-area: nav;
+  background-color: rgb(24, 230, 41);
+  padding: 0 15px;
+}
+
+.navRight {
+  grid-area: navRight;
+  background-color: rgb(24, 230, 41);
+  padding: 0 15px;
+}
+
+.main-content-wrapper {
+  grid-area: content;
+}
+
+.main-content-wrapper .main-content {
+  background-color: rgb(3, 3, 7);
+  width: 960px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 15px;
 }
 
-.App-link {
-  color: #61dafb;
+.news-line {
+  background-color: blue;
+  width: 663px;
+  height: 300px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.advertising {
+  background-color: bisque;
+  width: 282px;
+  height: 800px;
+}
+
+.block-stories {
+  width: 100%;
+  height: 232px;
+  background-color: yellow;
+}
+
+.new-post {
+  width: 100%;
+  height: 245px;
+  background-color: rgb(25, 0, 255);
+}
+
+.block-post {
+  width: 100%;
+  height: 400px;
+  background-color: rgb(255, 0, 0);
 }
