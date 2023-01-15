@@ -1,6 +1,8 @@
+import styles from "./NewPost.module.css"
+
 const NewPost = () => {
     return (
-        <div className= "new-post">
+        <div className= {styles.newPost}>
         create post
         </div>
     )

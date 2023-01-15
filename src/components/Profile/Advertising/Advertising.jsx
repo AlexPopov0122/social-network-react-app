@@ -1,6 +1,8 @@
+import styles from "./Advertising.module.css"
+
 const Advertising = () => {
     return (
-        <div className="advertising">
+        <div className={styles.advertising}>
         </div>
     )
 };

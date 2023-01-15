@@ -1,12 +1,12 @@
 import "./App.css";
-import Header from "./components/Header";
-import NavBar from "./components/NavBar";
-import NavBarRight from "./components/NavBarRight";
-import Profile from "./components/Profile";
+import Header from "./components/Header/Header";
+import NavBarRight from "./components/NavBarRight/NavBarRight";
+import Profile from "./components/Profile/Profile";
+import NavBar from "./components/NavBar/NavBar";
 
 const App = () => {
   return (
-    <div className="app-wrapper">
+    <div className = "app-wrapper">
       <Header/>
       <NavBar/>
       <Profile/>

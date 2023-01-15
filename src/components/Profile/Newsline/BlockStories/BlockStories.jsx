@@ -1,6 +1,8 @@
+import styles from "./BlockStories.module.css"
+
 const BlockStories = () => {
     return (
-        <div className= "block-stories">
+        <div className= {styles.blockStories}>
         block stories
         </div>
     )
