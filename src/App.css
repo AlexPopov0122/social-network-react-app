@@ -2,13 +2,12 @@
 @import "./resets/resetlocal";
 
 .app-wrapper {
-  display: grid;
-  grid-template-rows: 96px 1fr;
-  grid-template-columns: 280px 1fr 290px;
-  grid-template-areas: 
+    display: grid;
+    grid-template-rows: 96px 1fr;
+    grid-template-columns: 280px 1fr 290px;
+    grid-template-areas:
   "header header header"
   "nav content navRight";
-   font-size: 30px;
-   margin: 0 auto;
-    background-color: #57ff6d;
+    font-size: 30px;
+    margin: 0 auto;
 }
