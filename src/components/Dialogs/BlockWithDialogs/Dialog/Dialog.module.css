@@ -1,0 +1,35 @@
+.dialog {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .05)
+}
+
+.dialog span {
+    width: 7px;
+    height: 7px;
+    background-color: #10d876;
+    border-radius: 50%;
+    margin-top: 2px;
+}
+
+.dialog img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: 0 10px;
+}
+
+.dialog:hover {
+    background-color: #e8e8e8;
+    color: #222222;
+}
+
+.active .dialog {
+    color: #222222;
+    background-color: #d9d9d9;
+}

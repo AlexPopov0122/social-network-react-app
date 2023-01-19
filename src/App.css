@@ -8,6 +8,13 @@
     grid-template-areas:
   "header header header"
   "nav content navRight";
-    font-size: 30px;
+    grid-gap: 15px;
     margin: 0 auto;
+    background-color: #fcfcfc;
+    height: 100vh;
+    color: #888;
+}
+
+.mainContentWrapper {
+    grid-area: content;
 }

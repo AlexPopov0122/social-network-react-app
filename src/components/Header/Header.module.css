@@ -1,9 +1,10 @@
 .header {
-  grid-area: header;
-  background-color: aqua;
+    grid-area: header;
+    background-color: #fff;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .03);
 }
 
 .header img {
-  width: 20px;
-  height: 20px;
+    width: 20px;
+    height: 20px;
 }

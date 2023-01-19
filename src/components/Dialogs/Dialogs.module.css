@@ -1,0 +1,8 @@
+.mainContentMassage {
+    background-color: #fcfcfc;
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+    flex-direction: column;
+    grid-gap: 5px;
+    border-radius: 5px;
+}
