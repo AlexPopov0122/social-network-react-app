@@ -1,0 +1,12 @@
+.userMassage {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.userMassage img {
+    width: 35px;
+    height: 35px;
+    margin-top: 3px;
+    border-radius: 50%;
+}

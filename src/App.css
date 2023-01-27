@@ -7,12 +7,13 @@
     grid-template-columns: 280px 1fr 290px;
     grid-template-areas:
   "header header header"
-  "nav content navRight";
+  "nav content onlineBar";
     grid-gap: 15px;
     margin: 0 auto;
     background-color: #fcfcfc;
     height: 100vh;
     color: #888;
+    font-family: Montserrat, sans-serif;
 }
 
 .mainContentWrapper {

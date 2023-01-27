@@ -2,11 +2,11 @@ import styles from "./Dialogs.module.css"
 import BlockWithDialogs from "./BlockWithDialogs/BlockWithDialogs";
 import BlockWithMassages from "./BlockWithMassages/BlockWithMassages";
 
-function Dialogs() {
+function Dialogs(props) {
     return (
         <div className={styles.mainContentMassage}>
-            <BlockWithDialogs/>
-            <BlockWithMassages/>
+            <BlockWithDialogs dataUsersDialogs={props.state.dialogsPage.dataUsersDialogs}/>
+            <BlockWithMassages dialogsPage={props.state.dialogsPage} dispatch={props.dispatch}/>
         </div>
     )
 }

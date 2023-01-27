@@ -1,0 +1,64 @@
+.instruments {
+    display: flex;
+    position: relative;
+    color: #222222;
+    font-size: 12px;
+    font-weight: 500;
+    align-items: center;
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: default;
+    margin-right: 30px;
+}
+
+.heart {
+    width: 20px;
+    height: 20px;
+    color: #adb5bd;
+    font-size: 20px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.heart:hover {
+    color: #ee5975;
+}
+
+.comments {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+}
+
+.commentFavicon {
+    background-image: url(https://static.tildacdn.com/tild6634-3365-4133-b635-656330326230/549558370edc6d36c4c7.png);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px;
+}
+
+.share {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+
+.shareFavicon {
+    background-image: url(https://cdn-icons-png.flaticon.com/512/512/512189.png);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px;
+}

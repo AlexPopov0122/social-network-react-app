@@ -1,0 +1,56 @@
+.profileBlock {
+    background-color: #fff;
+    border-radius: 10px;
+    grid-area: profileBlock;
+    height: 400px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
+}
+
+.imageFon {
+    border-radius: 15px;
+    margin: 15px;
+    overflow: hidden;
+    height: 250px;
+}
+
+.blockUserName {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    bottom: 37px;
+    left: 30px;
+}
+
+.avatarUser {
+    padding: 5px;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+}
+
+.avatarUser img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.userName {
+    align-self: flex-end;
+    margin-bottom: 10px;
+}
+
+.name {
+    color: #222;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.email {
+    font-size: 12px;
+    color: #adb5bd;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+}

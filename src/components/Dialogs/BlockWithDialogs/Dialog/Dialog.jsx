@@ -5,9 +5,9 @@ let setActive = NavDate => NavDate.isActive ? styles.active : "";
 
 function Dialog(props) {
     return (
-        <NavLink to={`/dialogs/${props.numberPerson}`} className={setActive}>
+        <NavLink to={`/dialogs/${props.id}`} className={setActive}>
             <div className={styles.dialog}>
-                <span></span> <img src={props.avatarPersons} alt=""/> {props.userName}
+                <span></span> <img src={props.avatarCompanion} alt=""/> {props.companionName}
             </div>
         </NavLink>
     )

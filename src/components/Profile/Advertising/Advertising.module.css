@@ -1,5 +1,8 @@
 .advertising {
-    background-color: bisque;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
     width: 282px;
     height: 800px;
-  }
+    grid-area: advertising;
+}

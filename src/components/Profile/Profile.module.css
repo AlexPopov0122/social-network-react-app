@@ -1,7 +1,10 @@
 .mainContent {
-    background-color: rgb(3, 3, 7);
     width: 960px;
+    grid-template-areas:
+            "profileBlock profileBlock"
+            "advertising posts";
+    grid-template-columns: 282px 1fr;
     margin: 0 auto;
-    display: flex;
-    gap: 15px;
+    display: grid;
+    grid-gap: 15px;
 }

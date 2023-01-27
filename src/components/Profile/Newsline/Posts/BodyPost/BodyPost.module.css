@@ -1,0 +1,24 @@
+.bodyPost {
+    margin-top: 10px;
+}
+
+.textPost {
+    font-size: 13px;
+    color: #222222;
+    font-weight: 500;
+    line-height: 26px;
+    width: 600px;
+    margin-bottom: 20px;
+}
+
+.blockFiles {
+    display: flex;
+    justify-content: space-between;
+}
+
+.blockFiles img {
+    width: 200px;
+    height: 135px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}

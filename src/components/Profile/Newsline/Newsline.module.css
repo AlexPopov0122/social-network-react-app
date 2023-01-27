@@ -1,5 +1,6 @@
 .newsLine {
-    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     width: 663px;
-    height: 300px;
-  }
+}

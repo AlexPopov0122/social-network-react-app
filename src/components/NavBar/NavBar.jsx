@@ -1,7 +1,7 @@
 import styles from "./NavBar.module.css"
 import {NavLink} from "react-router-dom";
 
-let setActive = NavDate => NavDate.isActive ? styles.active : styles.withoutActive;
+let setActive = NavDate => NavDate.isActive ? styles.active : "";
 
 const NavBar = () => {
     return (

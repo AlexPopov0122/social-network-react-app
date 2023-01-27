@@ -25,11 +25,11 @@
 }
 
 .dialog:hover {
-    background-color: #e8e8e8;
+    background-color: #f3f7fc;
     color: #222222;
 }
 
 .active .dialog {
     color: #222222;
-    background-color: #d9d9d9;
+    background-color: #e2edf9;
 }

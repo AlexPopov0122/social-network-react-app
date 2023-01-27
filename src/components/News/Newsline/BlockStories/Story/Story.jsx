@@ -1,9 +1,9 @@
 import styles from "./Story.module.css"
 
-const Story = (prompt) => {
+const Story = (props) => {
     return (
         <div className={styles.blockStory}>
-            {prompt.text}
+            {props.text}
         </div>
     )
 }

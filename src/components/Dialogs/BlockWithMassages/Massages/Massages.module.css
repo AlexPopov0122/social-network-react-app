@@ -1,0 +1,8 @@
+.massagesProfiles {
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px;
+    display: grid;
+    height: 100%;
+    color: #222222;
+}
