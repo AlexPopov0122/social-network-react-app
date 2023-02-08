@@ -243,29 +243,39 @@ let initialState = {
     NewMassageText: ""
 };
 
-let dataUser = dataUserReducer();
+let dataUserCopy = {...dataUserReducer()};
 
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_MASSAGE:
+        case ADD_MASSAGE: {
+            let stateCopy = {...state};
+            stateCopy.usersMassages = [...state.usersMassages]
             let newMassage = {
-                massage: state.NewMassageText,
-                userName: dataUser.name,
-                avatar: dataUser.avatar
+                massage: stateCopy.NewMassageText,
+                userName: dataUserCopy.name,
+                avatar: dataUserCopy.avatar
             }
             if (/\S+/.test(newMassage.massage)) {
-                state.usersMassages[action.userId].massages.push(newMassage);
-                state.NewMassageText = "";
+                stateCopy.usersMassages[action.userId].massages.push(newMassage);
+                stateCopy.NewMassageText = "";
+                return stateCopy;
             } else {
-                state.NewMassageText = "";
+                return {
+                    ...state,
+                    NewMassageText: ""
+                }
             }
-            break;
-
-        case CHANGE_MASSAGE:
-            state.NewMassageText = action.NewMassageText;
-            break;
+        }
+        case CHANGE_MASSAGE: {
+            return {
+                ...state,
+                NewMassageText: action.NewMassageText
+            }
+        }
+        default:
+            return state;
     }
-    return state;
+
 }
 
 export const changeMassageActionCreator = (text) =>

@@ -16,6 +16,9 @@ const NavBar = () => {
 
             <NavLink to="/music" className={setActive}>Music</NavLink>
 
+            <NavLink to="/findFriends"
+                     className={setActive}>Find friends</NavLink>
+
             <NavLink to="/settings" className={setActive}>Settings</NavLink>
         </nav>
     );

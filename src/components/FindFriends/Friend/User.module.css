@@ -1,0 +1,62 @@
+.user {
+    position: relative;
+    display: flex;
+    width: 600px;
+    height: 100px;
+    background-color: #fff;
+    margin: 0 auto;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
+    border-radius: 10px;
+    align-items: center;
+    padding: 0 15px;
+    color: #222222;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 15px;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.location {
+    font-size: 13px;
+}
+
+.country {
+    margin-right: 5px;
+}
+
+.city {
+    margin-left: 5px;
+}
+
+.name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.follow {
+    position: absolute;
+    right: 15px;
+    padding: 5px 20px;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+}
+
+.follow:hover {
+    background-color: #e2edf9;
+}

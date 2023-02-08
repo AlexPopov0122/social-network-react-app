@@ -5,8 +5,9 @@ import BlockWithMassages from "./BlockWithMassages/BlockWithMassages";
 function Dialogs(props) {
     return (
         <div className={styles.mainContentMassage}>
-            <BlockWithDialogs dataUsersDialogs={props.state.dialogsPage.dataUsersDialogs}/>
-            <BlockWithMassages dialogsPage={props.state.dialogsPage} dispatch={props.dispatch}/>
+            <BlockWithDialogs dataUsersDialogs={props.store.getState().dialogsPage.dataUsersDialogs}/>
+            <BlockWithMassages store={props.store}
+                               usersMassages={props.store.getState().dialogsPage.usersMassages}/>
         </div>
     )
 }

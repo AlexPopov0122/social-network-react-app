@@ -6,6 +6,7 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import Profile from "./components/Profile/Profile";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
+import FindFriendsContainer from "./components/FindFriends/FindFriendsContainer";
 
 const App = (props) => {
     return (
@@ -16,12 +17,12 @@ const App = (props) => {
                 <div className="mainContentWrapper">
                     <Routes>
                         <Route path="/dialogs/*"
-                               element={<Dialogs state={props.state} dispatch={props.dispatch}/>}/>
+                               element={<Dialogs store={props.store}/>}/>
                         <Route path="/profile/*"
-                               element={<Profile dataUser={props.state.dataUser}
-                                                 profilePage={props.state.profilePage}
-                                                 dispatch={props.dispatch}/>}/>
+                               element={<Profile store={props.store}/>}/>
                         <Route path="/news/*" element={<News/>}/>
+                        <Route path="/findFriends/*"
+                               element={<FindFriendsContainer/>}/>
                     </Routes>
                 </div>
                 <OnlineBar/>

@@ -1,17 +1,16 @@
-import NewPost from "./NewPost/NewPost";
 import Posts from "./Posts/Posts";
 import styles from "./Newsline.module.css"
+import NewPostContainer from "./NewPost/NewPostContainer";
 
 const Newsline = (props) => {
 
     let createPosts = props.posts.map((post) => (
-        <Posts dataUser={props.dataUser} post={post}/>
+        <Posts dataUser={props.store.getState().dataUser} post={post}/>
     ))
 
     return (
         <div className={styles.newsLine}>
-            <NewPost dataUser={props.dataUser} NewPostText={props.NewPostText}
-                     dispatch={props.dispatch}/>
+            <NewPostContainer store={props.store}/>
             {createPosts}
         </div>
     )

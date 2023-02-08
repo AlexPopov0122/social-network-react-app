@@ -40,7 +40,7 @@ let initialState = {
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST: {
             let newPost = {
                 text: state.NewPostText,
                 files: [],
@@ -49,17 +49,29 @@ const profileReducer = (state = initialState, action) => {
                 timePost: "Moment ago"
             }
             if (/\S+/.test(newPost.text)) {
-                state.posts.push(newPost);
-                state.NewPostText = "";
+                return {
+                    ...state,
+                    posts: [newPost, ...state.posts],
+                    NewPostText: ""
+                }
             } else {
-                state.NewPostText = ""
+                return {
+                    ...state,
+                    NewPostText: ""
+                }
             }
-            break;
-        case UPDATE_NEW_POST_TEXT:
-            state.NewPostText = action.NewPostText;
-            break;
+        }
+        case UPDATE_NEW_POST_TEXT: {
+            let stateCopy = {...state};
+            stateCopy.NewPostText = action.NewPostText;
+            return {
+                ...state,
+                NewPostText: action.NewPostText
+            }
+        }
+        default:
+            return state
     }
-    return state;
 }
 
 export const addPostActionCreator = () => ({type: ADD_POST})

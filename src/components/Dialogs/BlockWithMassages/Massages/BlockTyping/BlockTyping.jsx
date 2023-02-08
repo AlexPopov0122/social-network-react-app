@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./BlockTyping.module.css"
-import {addMassageActionCreator, changeMassageActionCreator} from "../../../../../Redux/dialogs-reducer";
 
 let textInputMassage = React.createRef();
 
@@ -8,14 +7,12 @@ const BlockTyping = (props) => {
 
     let submitMassage = () => {
         let id = props.userId;
-        let action = addMassageActionCreator(id);
-        props.dispatch(action)
+        props.addMassageActionCreator(id);
     }
 
     let onChangeInput = () => {
         let text = textInputMassage.current.value;
-        let action = changeMassageActionCreator(text);
-        props.dispatch(action)
+        props.changeMassageActionCreator(text);
     }
 
     return (

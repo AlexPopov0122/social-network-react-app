@@ -6,10 +6,9 @@ import ProfileBlock from "./ProfileBlock/ProfileBlock";
 const Profile = (props) => {
     return (
         <div className={styles.mainContent}>
-            <ProfileBlock dataUser={props.dataUser}/>
-            <Newsline dataUser={props.dataUser} posts={props.profilePage.posts}
-                      NewPostText={props.profilePage.NewPostText}
-                      dispatch={props.dispatch}/>
+            <ProfileBlock dataUser={props.store.getState().dataUser}/>
+            <Newsline store={props.store}
+                      posts={props.store.getState().profilePage.posts}/>
             <Advertising/>
         </div>
     );

@@ -6,12 +6,15 @@ import React from "react";
 
 
 import App from "./App";
+import {Provider} from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const renderPage = () => {
     root.render(
         <React.StrictMode>
-            <App state={store.getState()} dispatch={store.dispatch.bind(store)}/>
+            <Provider store={store}>
+                <App store={store}/>
+            </Provider>
         </React.StrictMode>
     );
 }
