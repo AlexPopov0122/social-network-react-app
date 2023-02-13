@@ -46,7 +46,7 @@ let initialState = {
             {
                 massage: "Hi!",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
@@ -56,7 +56,7 @@ let initialState = {
             {
                 massage: "I'm fine. Thanks. And you?",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "Fine. Thanks",
@@ -75,7 +75,7 @@ let initialState = {
             {
                 massage: "Hello",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
@@ -85,7 +85,7 @@ let initialState = {
             {
                 massage: "I'm fine. Thanks. And you?",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "Fine. Thanks",
@@ -104,7 +104,7 @@ let initialState = {
             {
                 massage: "Hello",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
@@ -114,7 +114,7 @@ let initialState = {
             {
                 massage: "I'm fine. Thanks. And you?",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "Fine. Thanks",
@@ -133,7 +133,7 @@ let initialState = {
             {
                 massage: "Hello",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
@@ -143,7 +143,7 @@ let initialState = {
             {
                 massage: "I'm fine. Thanks. And you?",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "Fine. Thanks",
@@ -162,7 +162,7 @@ let initialState = {
             {
                 massage: "Hello",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
@@ -172,7 +172,7 @@ let initialState = {
             {
                 massage: "I'm fine. Thanks. And you?",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "Fine. Thanks",
@@ -191,7 +191,7 @@ let initialState = {
             {
                 massage: "Hello",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
@@ -201,7 +201,7 @@ let initialState = {
             {
                 massage: "I'm fine. Thanks. And you?",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "Fine. Thanks",
@@ -220,7 +220,7 @@ let initialState = {
             {
                 massage: "Hello",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
@@ -230,7 +230,7 @@ let initialState = {
             {
                 massage: "I'm fine. Thanks. And you?",
                 userName: "Alexander Popov",
-                avatar: "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"
+                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "Fine. Thanks",
