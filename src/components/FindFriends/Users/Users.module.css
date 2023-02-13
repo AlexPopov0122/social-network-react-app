@@ -1,0 +1,16 @@
+.findFriends {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.active {
+    color: #222222;
+    font-weight: bold;
+}
+
+.pagesCount {
+    cursor: pointer;
+    display: flex;
+    gap: 5px;
+}

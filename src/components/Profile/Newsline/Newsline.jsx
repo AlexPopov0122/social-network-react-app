@@ -4,13 +4,13 @@ import NewPostContainer from "./NewPost/NewPostContainer";
 
 const Newsline = (props) => {
 
-    let createPosts = props.posts.map((post) => (
-        <Posts dataUser={props.store.getState().dataUser} post={post}/>
+    let createPosts = props.posts.map((post, i) => (
+        <Posts dataUser={props.dataUser} key={i} post={post}/>
     ))
 
     return (
         <div className={styles.newsLine}>
-            <NewPostContainer store={props.store}/>
+            <NewPostContainer/>
             {createPosts}
         </div>
     )

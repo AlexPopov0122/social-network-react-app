@@ -1,5 +1,8 @@
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const TOGGLE_FETCHING = "TOGGLE_FETCHING";
+const CHANGE_USER_ID = "CHANGE_USER_ID";
 
 let initialState = {
     posts: [
@@ -29,13 +32,16 @@ let initialState = {
                 "feugiat non nisi. Phasellus faucibus mollis pharetra. Proin blandit ac massa sed rhoncus",
             files: ["http://uitheme.net/sociala/images/t-10.jpg",
                 "http://uitheme.net/sociala/images/t-11.jpg",
-                "https://i.ytimg.com/vi/eBlpJVELZ_k/maxresdefault.jpg"],
+                "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"],
             likes: "968",
             comments: "224",
             timePost: "1 year ago"
         }
     ],
-    NewPostText: ""
+    NewPostText: "",
+    userData: null,
+    userId: null,
+    isFetching: true
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -69,13 +75,32 @@ const profileReducer = (state = initialState, action) => {
                 NewPostText: action.NewPostText
             }
         }
+        case SET_USER_PROFILE: {
+            return {
+                ...state,
+                userData: action.userData
+            }
+        }
+        case TOGGLE_FETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
+        case CHANGE_USER_ID:
+            return {
+                ...state,
+                userId: action.userId
+            }
         default:
             return state
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST})
+export const addPostActionCreator = () => ({type: ADD_POST});
 export const updateNewPostTextActionCreator = (text) =>
-    ({type: UPDATE_NEW_POST_TEXT, NewPostText: text})
+    ({type: UPDATE_NEW_POST_TEXT, NewPostText: text});
+export const setUserProfile = (userData) => ({type: SET_USER_PROFILE, userData});
+export const toggleFetching = (isFetching) => ({type: TOGGLE_FETCHING, isFetching});
+export const changeUserId = (userId) => ({type: CHANGE_USER_ID, userId});
 
 export default profileReducer;

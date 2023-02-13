@@ -2,8 +2,8 @@ import styles from "./BodyPost.module.css"
 
 const BodyPost = (props) => {
 
-    let createFiles = props.files.map((file) => (
-        <img src={file} alt="imagePost"/>
+    let createFiles = props.files.map((file, i) => (
+        <img key={i} src={file} alt="imagePost"/>
     ))
 
     return (

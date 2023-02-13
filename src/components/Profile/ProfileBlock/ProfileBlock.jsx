@@ -9,11 +9,11 @@ let ProfileBlock = (props) => {
 
             <div className={styles.blockUserName}>
                 <div className={styles.avatarUser}>
-                    <img src={props.dataUser.avatar} alt="avatar"/>
+                    <img src={props.userData.photos.small} alt="avatar"/>
                 </div>
                 <div className={styles.userName}>
-                    <div className={styles.name}>{props.dataUser.name}</div>
-                    <div className={styles.email}>{props.dataUser.email}</div>
+                    <div className={styles.name}>{props.userData.fullName}</div>
+                    <div className={styles.email}>{props.userData.vk}</div>
                 </div>
             </div>
 

@@ -1,16 +1,23 @@
 import styles from "./User.module.css";
-import avatarDefault from "../../../assets/images/avatar-default-photo.png";
+import avatarDefault from "../../../../assets/images/avatar-default-photo.png";
+import {NavLink} from "react-router-dom";
 
 const User = (props) => {
-
-    // let status = props.user.follow ? "Unfollow" : "Follow";
     return (
         <div className={styles.user}>
-            <div className={styles.avatar}>
-                <img src={props.user.photos.small ? props.user.photos.small : avatarDefault} alt="avatar"/>
-            </div>
+            <NavLink to={`/profile/${props.user.id}`}
+                // action creator на смену id
+                /*onClick={() => props.onUserIdChange(props.user.id)}*/>
+                <div className={styles.avatar}>
+                    <img src={props.user.photos.small ? props.user.photos.small : avatarDefault} alt="avatar"/>
+                </div>
+            </NavLink>
             <div className={styles.data}>
-                <div className={styles.name}>{props.user.name}</div>
+                <NavLink to={`/profile/${props.user.id}`}
+                    // action creator на смену id
+                    /*onClick={() => props.onUserIdChange(props.user.id)}*/>
+                    <div className={styles.name}>{props.user.name}</div>
+                </NavLink>
                 <div className={styles.location}>
                     <span className={styles.country}>{"props.user.country"}</span>|
                     <span className={styles.city}>{"props.user.city"}</span>

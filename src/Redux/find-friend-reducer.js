@@ -1,9 +1,16 @@
 const SET_USERS = "SET_USERS";
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
+const CURRENT_PAGE = "CURRENT_PAGE";
+const TOTAL_COUNT_PAGE = "TOTAL_COUNT_PAGE";
+const TOGGLE_FETCHING = "TOGGLE_FETCHING";
 
 let initialState = {
-    users: []
+    users: [],
+    count: 10,
+    currentPage: 1,
+    totalCountPage: 0,
+    isFetching: true
 };
 
 const findFriendsReducer = (state = initialState, action) => {
@@ -11,7 +18,7 @@ const findFriendsReducer = (state = initialState, action) => {
         case SET_USERS: {
             return {
                 ...state,
-                users: [/*...state.users, */...action.users]
+                users: action.users
             }
         }
         case FOLLOW:
@@ -34,15 +41,31 @@ const findFriendsReducer = (state = initialState, action) => {
                     return u
                 })
             }
-        // let status;
-        // action.userStatus === "Follow" ? status = true : status = false;
+        case CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: +action.page
+            }
+        case TOTAL_COUNT_PAGE:
+            return {
+                ...state,
+                totalCountPage: action.total / state.count
+            }
+        case TOGGLE_FETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching
+            }
         default:
             return state;
     }
 
 }
-export const setUsersAC = (users) => ({type: SET_USERS, users});
-export const followAC = (id) => ({type: FOLLOW, userId: id});
-export const unfollowAC = (id) => ({type: UNFOLLOW, userId: id});
+export const setUsers = (users) => ({type: SET_USERS, users});
+export const follow = (id) => ({type: FOLLOW, userId: id});
+export const unfollow = (id) => ({type: UNFOLLOW, userId: id});
+export const setCurrentPage = (page) => ({type: CURRENT_PAGE, page});
+export const setTotalCount = (total) => ({type: TOTAL_COUNT_PAGE, total});
+export const toggleFetching = (isFetching) => ({type: TOGGLE_FETCHING, isFetching});
 
 export default findFriendsReducer;

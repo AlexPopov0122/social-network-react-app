@@ -47,6 +47,7 @@
 .name {
     font-size: 15px;
     font-weight: 600;
+    display: inline-block;
 }
 
 .follow {
