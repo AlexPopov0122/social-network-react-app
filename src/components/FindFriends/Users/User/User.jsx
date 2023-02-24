@@ -5,17 +5,13 @@ import {NavLink} from "react-router-dom";
 const User = (props) => {
     return (
         <div className={styles.user}>
-            <NavLink to={`/profile/${props.user.id}`}
-                // action creator на смену id
-                /*onClick={() => props.onUserIdChange(props.user.id)}*/>
+            <NavLink to={`/profile/${props.user.id}`}>
                 <div className={styles.avatar}>
                     <img src={props.user.photos.small ? props.user.photos.small : avatarDefault} alt="avatar"/>
                 </div>
             </NavLink>
             <div className={styles.data}>
-                <NavLink to={`/profile/${props.user.id}`}
-                    // action creator на смену id
-                    /*onClick={() => props.onUserIdChange(props.user.id)}*/>
+                <NavLink to={`/profile/${props.user.id}`}>
                     <div className={styles.name}>{props.user.name}</div>
                 </NavLink>
                 <div className={styles.location}>
@@ -24,10 +20,16 @@ const User = (props) => {
                 </div>
             </div>
             {
-                props.user.follow
-                    ? <button type="button" onClick={() => props.unfollow(props.user.id)}
+                props.user.followed
+                    ? <button type="button" disabled={props.disabledFollowButton.some(dis => dis === props.user.id)}
+                              onClick={() => {
+                                  props.unfollow(props.user.id)
+                              }}
                               className={styles.follow}>Unfollow</button>
-                    : <button type="button" onClick={() => props.follow(props.user.id)}
+                    : <button type="button" disabled={props.disabledFollowButton.some(dis => dis === props.user.id)}
+                              onClick={() => {
+                                  props.follow(props.user.id)
+                              }}
                               className={styles.follow}>Follow</button>
             }
         </div>

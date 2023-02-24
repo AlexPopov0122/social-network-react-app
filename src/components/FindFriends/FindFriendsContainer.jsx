@@ -1,45 +1,30 @@
 import {connect} from "react-redux";
 import {
-    setCurrentPage,
     follow,
-    setUsers,
-    toggleFetching,
-    setTotalCount,
-    unfollow
+    unfollow,
+    getUsers
 } from "../../Redux/find-friend-reducer";
 import React from "react";
-import axios from "axios";
 import Users from "./Users/Users";
 import Fetching from "../Fetching/Fetching";
-// action creator на смену id
-/*import {changeUserId} from "../../Redux/profile-reducer";*/
+import {withAuthRedirect} from "../withAuthRedirect/withAuthRedirect";
+import {compose} from "redux";
+import {
+    getCount,
+    getCurrentPage, getDisabledFollowButton,
+    getFoundUsers, getFoundUsersSelector,
+    getIsFetching,
+    getTotalCountPage
+} from "../../Selectors/find-friends-selectors";
 
 class FindFriends extends React.Component {
 
     componentDidMount() {
-        this.props.toggleFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.count}`)
-            .then(response => {
-                this.props.toggleFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalCount(response.data.totalCount)
-            })
+        this.props.getUsers(this.props.currentPage, this.props.count)
     }
 
-    // action creator на смену id
-    /*onUserIdChange(userId) {
-        this.props.changeUserId(userId)
-    }*/
-
     onCurrentPageButton(page) {
-        this.props.setCurrentPage(page)
-        this.props.toggleFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.count}`)
-            .then(response => {
-                this.props.toggleFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalCount(response.data.totalCount)
-            })
+        this.props.getUsers(page)
     }
 
     render() {
@@ -51,8 +36,7 @@ class FindFriends extends React.Component {
                        follow={this.props.follow}
                        unfollow={this.props.unfollow}
                        onCurrentPageButton={this.onCurrentPageButton.bind(this)}
-                    // action creator на смену id
-                    /*onUserIdChange={this.onUserIdChange.bind(this)}*//>
+                       disabledFollowButton={this.props.disabledFollowButton}/>
             }
         </>
     }
@@ -60,26 +44,26 @@ class FindFriends extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.findFriendsPage.users,
-        count: state.findFriendsPage.count,
-        currentPage: state.findFriendsPage.currentPage,
-        totalCountPage: state.findFriendsPage.totalCountPage,
-        isFetching: state.findFriendsPage.isFetching
+        users: getFoundUsersSelector(state),
+        count: getCount(state),
+        currentPage: getCurrentPage(state),
+        totalCountPage: getTotalCountPage(state),
+        isFetching: getIsFetching(state),
+        disabledFollowButton: getDisabledFollowButton(state)
     }
 }
 
-const FindFriendsContainer = connect(mapStateToProps, {
-    follow,
-    unfollow,
-    setUsers,
-    setCurrentPage,
-    setTotalCount,
-    toggleFetching
-    // action creator на смену id
-    /*changeUserId*/
-})(FindFriends)
+export default compose(
+    connect(mapStateToProps, {
+        follow, unfollow, getUsers
+    }),
+    withAuthRedirect
+)(FindFriends)
 
-export default FindFriendsContainer;
+// const FindFriendsContainer = withAuthRedirect(connect(mapStateToProps, {
+//     follow, unfollow, getUsers
+// })(FindFriends))
+// export default FindFriendsContainer;
 
 // const mapDispatchToProps = (dispatch) => {
 //     return {

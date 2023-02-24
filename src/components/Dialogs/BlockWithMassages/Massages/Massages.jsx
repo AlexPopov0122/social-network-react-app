@@ -12,7 +12,7 @@ const Massages = (props) => {
             <div>
                 {massagesCreate}
             </div>
-            <BlockTypingContainer store={props.store} userId={props.userId}/>
+            <BlockTypingContainer userId={props.userId}/>
         </div>
     )
 }

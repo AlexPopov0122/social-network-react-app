@@ -1,8 +1,11 @@
+import {authMe, profileAPI} from "../api/api";
+
 const ADD_POST = "ADD-POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const TOGGLE_FETCHING = "TOGGLE_FETCHING";
 const CHANGE_USER_ID = "CHANGE_USER_ID";
+const TOGGLE_AUTH = "TOGGLE_AUTH";
+const SET_USER_STATUS = "SET_USER_STATUS";
 
 let initialState = {
     posts: [
@@ -38,47 +41,49 @@ let initialState = {
             timePost: "1 year ago"
         }
     ],
-    NewPostText: "",
     userData: null,
     userId: null,
-    isFetching: true
+    isFetching: true,
+    userStatus: ""
 };
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
-                text: state.NewPostText,
+                text: action.newPostText,
                 files: [],
                 likes: 0,
                 comments: 0,
                 timePost: "Moment ago"
             }
-            if (/\S+/.test(newPost.text)) {
-                return {
-                    ...state,
-                    posts: [newPost, ...state.posts],
-                    NewPostText: ""
-                }
-            } else {
-                return {
-                    ...state,
-                    NewPostText: ""
-                }
-            }
-        }
-        case UPDATE_NEW_POST_TEXT: {
-            let stateCopy = {...state};
-            stateCopy.NewPostText = action.NewPostText;
             return {
                 ...state,
-                NewPostText: action.NewPostText
+                posts: [newPost, ...state.posts],
             }
+            // if (/\S+/.test(newPost.text)) {
+            //     return {
+            //         ...state,
+            //         posts: [newPost, ...state.posts],
+            //         NewPostText: ""
+            //     }
+            // } else {
+            //     return {
+            //         ...state,
+            //         NewPostText: ""
+            //     }
+            // }
         }
         case SET_USER_PROFILE: {
             return {
                 ...state,
                 userData: action.userData
+            }
+        }
+        case SET_USER_STATUS: {
+            return {
+                ...state,
+                userStatus: action.status
             }
         }
         case TOGGLE_FETCHING:
@@ -91,16 +96,66 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 userId: action.userId
             }
+        case TOGGLE_AUTH:
+            return {
+                ...state,
+                isAuth: action.isAuth
+            }
         default:
             return state
     }
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const updateNewPostTextActionCreator = (text) =>
-    ({type: UPDATE_NEW_POST_TEXT, NewPostText: text});
+export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostText});
 export const setUserProfile = (userData) => ({type: SET_USER_PROFILE, userData});
+export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 export const toggleFetching = (isFetching) => ({type: TOGGLE_FETCHING, isFetching});
 export const changeUserId = (userId) => ({type: CHANGE_USER_ID, userId});
+
+export const getUserProfile = (userId) => (dispatch) => {
+    if (!userId) {
+        authMe.getAuthMe().then(data => {
+            userId = data.data.id
+            profileAPI.getUserProfile(userId)
+                .then(data => {
+                    dispatch(setUserProfile(data))
+                    dispatch(changeUserId(userId))
+                    dispatch(toggleFetching(false))
+                })
+        })
+    } else {
+        profileAPI.getUserProfile(userId)
+            .then(data => {
+                dispatch(setUserProfile(data))
+                dispatch(toggleFetching(false))
+            })
+    }
+}
+
+export const getUserStatus = (userId) => (dispatch) => {
+    if (!userId) {
+        authMe.getAuthMe().then(data => {
+            userId = data.data.id
+            profileAPI.getUserStatus(userId)
+                .then(data => {
+                    dispatch(setUserStatus(data.data))
+                })
+        })
+    } else {
+        profileAPI.getUserStatus(userId)
+            .then(data => {
+                dispatch(setUserStatus(data.data))
+            })
+    }
+}
+
+export const updateUserStatus = (status) => (dispatch) => {
+    profileAPI.setUserStatus(status)
+        .then(data => {
+            if (data.data.resultCode === 0) {
+                dispatch(setUserStatus(status))
+            }
+        })
+}
 
 export default profileReducer;

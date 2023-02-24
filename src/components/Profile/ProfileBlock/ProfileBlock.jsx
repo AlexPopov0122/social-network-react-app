@@ -1,6 +1,7 @@
 import styles from "./ProfileBlock.module.css";
+import StatusWithUseState from "./Status/StatusWithUseState";
 
-let ProfileBlock = (props) => {
+const ProfileBlock = (props) => {
     return (
         <div className={styles.profileBlock}>
             <div className={styles.imageFon}>
@@ -14,6 +15,7 @@ let ProfileBlock = (props) => {
                 <div className={styles.userName}>
                     <div className={styles.name}>{props.userData.fullName}</div>
                     <div className={styles.email}>{props.userData.vk}</div>
+                    <StatusWithUseState userStatus={props.userStatus} updateUserStatus={props.updateUserStatus}/>
                 </div>
             </div>
 

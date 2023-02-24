@@ -1,11 +1,16 @@
+import {authMe, profileAPI} from "../api/api";
+import {changeUserId, setUserProfile} from "./profile-reducer";
+import {stopSubmit} from "redux-form";
+
 const SET_USER_AUTH = "SET_USER_AUTH";
-const TOGGLE_USER_AUTH_BOOL = "TOGGLE_USER_AUTH_BOOL";
+const SET_INITIAL = "SET_INITIAL";
 
 let initialState = {
     login: null,
     id: null,
     email: null,
-    isUserAuth: false
+    isUserAuth: false,
+    isInitial: false
 };
 
 const authReducer = (state = initialState, action) => {
@@ -14,19 +19,58 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_AUTH:
             return {
                 ...state,
-                ...action.data
+                login: action.login,
+                id: action.id,
+                email: action.email,
+                isUserAuth: action.isUserAuth
             }
-        case TOGGLE_USER_AUTH_BOOL:
+        case SET_INITIAL:
             return {
                 ...state,
-                isUserAuth: action.isAuth
+                isInitial: true
             }
         default:
             return state;
     }
 
 }
-export const setUserAuth = (data) => ({type: SET_USER_AUTH, data});
-export const toggleUserAuthBool = (isAuth) => ({type: TOGGLE_USER_AUTH_BOOL, isAuth});
+export const setUserAuth = (login, id, email, isUserAuth) => ({type: SET_USER_AUTH, login, id, email, isUserAuth});
+export const setInitial = () => ({type: SET_INITIAL});
+
+export const getAuthMe = () => (dispatch) => {
+    authMe.getAuthMe()
+        .then(dataMe => {
+            if (dataMe.resultCode === 0) {
+                profileAPI.getUserProfile(dataMe.data.id)
+                    .then(dataProfile => {
+                        dispatch(setUserProfile(dataProfile))
+                        dispatch(changeUserId(dataMe.data.id))
+                        dispatch(setUserAuth(dataMe.data.login, dataMe.data.id, dataMe.data.email, true))
+                        dispatch(setInitial())
+                    })
+            } else {
+                dispatch(setUserAuth(null, null, null, false))
+                dispatch(setInitial())
+            }
+        })
+}
+
+export const login = (email, password, rememberMe) => (dispatch) => {
+    authMe.login(email, password, rememberMe)
+        .then(data => {
+            if (data.data.resultCode === 0) {
+                dispatch(getAuthMe())
+            } else {
+                let massage = data.data.messages.length > 0 ? data.data.messages[0] : "Some error";
+                dispatch(stopSubmit("loginForm", {_error: massage}))
+            }
+        })
+}
+
+export const logout = () => (dispatch) => {
+    authMe.logout()
+        .then(dispatch(setUserAuth(null, null, null, false)))
+}
+
 
 export default authReducer;

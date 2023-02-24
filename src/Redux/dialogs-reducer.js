@@ -1,7 +1,6 @@
 import dataUserReducer from "./dataUser-reducer";
 
 const ADD_MASSAGE = "ADD_MASSAGE";
-const CHANGE_MASSAGE = "CHANGE_MASSAGE";
 
 let initialState = {
     dataUsersDialogs: [{
@@ -239,8 +238,7 @@ let initialState = {
             }
         ],
     },
-    ],
-    NewMassageText: ""
+    ]
 };
 
 let dataUserCopy = {...dataUserReducer()};
@@ -251,26 +249,22 @@ const dialogsReducer = (state = initialState, action) => {
             let stateCopy = {...state};
             stateCopy.usersMassages = [...state.usersMassages]
             let newMassage = {
-                massage: stateCopy.NewMassageText,
+                massage: action.NewMassageText,
                 userName: dataUserCopy.name,
                 avatar: dataUserCopy.avatar
             }
-            if (/\S+/.test(newMassage.massage)) {
-                stateCopy.usersMassages[action.userId].massages.push(newMassage);
-                stateCopy.NewMassageText = "";
-                return stateCopy;
-            } else {
-                return {
-                    ...state,
-                    NewMassageText: ""
-                }
-            }
-        }
-        case CHANGE_MASSAGE: {
-            return {
-                ...state,
-                NewMassageText: action.NewMassageText
-            }
+            stateCopy.usersMassages[action.userId].massages.push(newMassage);
+            return stateCopy;
+            // if (/\S+/.test(newMassage.massage)) {
+            //     stateCopy.usersMassages[action.userId].massages.push(newMassage);
+            //     stateCopy.NewMassageText = "";
+            //     return stateCopy;
+            // } else {
+            //     return {
+            //         ...state,
+            //         NewMassageText: ""
+            //     }
+            // }
         }
         default:
             return state;
@@ -278,8 +272,6 @@ const dialogsReducer = (state = initialState, action) => {
 
 }
 
-export const changeMassageActionCreator = (text) =>
-    ({type: CHANGE_MASSAGE, NewMassageText: text})
-export const addMassageActionCreator = (id) => ({type: ADD_MASSAGE, userId: id})
+export const addMassageActionCreator = (id, NewMassageText) => ({type: ADD_MASSAGE, userId: id, NewMassageText})
 
 export default dialogsReducer;

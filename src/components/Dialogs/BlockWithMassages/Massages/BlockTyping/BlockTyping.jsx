@@ -1,28 +1,38 @@
 import React from "react";
 import styles from "./BlockTyping.module.css"
+import {Field, reduxForm} from "redux-form";
 
-let textInputMassage = React.createRef();
+// let textInputMassage = React.createRef();
 
 const BlockTyping = (props) => {
 
-    let submitMassage = () => {
-        let id = props.userId;
-        props.addMassageActionCreator(id);
-    }
-
-    let onChangeInput = () => {
-        let text = textInputMassage.current.value;
-        props.changeMassageActionCreator(text);
+    const onSubmit = (dataSubmit) => {
+        console.log(dataSubmit)
+        props.addMassageActionCreator(props.userId, dataSubmit.fieldTypingMassage)
     }
 
     return (
         <div className={styles.writeMassage}>
-            <input type="text" ref={textInputMassage} onChange={onChangeInput} value={props.NewMassageText}
-                   className={styles.blockTyping}
-                   placeholder="Start typing..."/>
-            <input type="button" onClick={submitMassage} className={styles.submitMassage} value="&#10148;"/>
+            <BlockTypingReduxForm onSubmit={onSubmit}/>
         </div>
     )
 }
+
+const BlockTypingForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit} className={styles.writeMassage}>
+            <Field type={"text"}
+                   className={styles.blockTyping}
+                   name={"fieldTypingMassage"}
+                   placeholder={"Start typing..."}
+                   component={"input"}/>
+            <button className={styles.submitMassage}>&#10148;</button>
+        </form>
+    )
+}
+
+const BlockTypingReduxForm = reduxForm({
+    form: "fieldTypingMassage"
+})(BlockTypingForm);
 
 export default BlockTyping;

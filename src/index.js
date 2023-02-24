@@ -13,7 +13,7 @@ const renderPage = () => {
     root.render(
         <React.StrictMode>
             <Provider store={store}>
-                <App store={store}/>
+                <App isInitial={store.getState().authUserData.isInitial}/>
             </Provider>
         </React.StrictMode>
     );

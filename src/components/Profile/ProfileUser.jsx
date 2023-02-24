@@ -6,7 +6,8 @@ import ProfileBlock from "./ProfileBlock/ProfileBlock";
 const ProfileUser = (props) => {
     return (
         <div className={styles.mainContent}>
-            <ProfileBlock dataUser={props.dataUser} userData={props.userData}/>
+            <ProfileBlock dataUser={props.dataUser} userData={props.userData}
+                          userStatus={props.userStatus} updateUserStatus={props.updateUserStatus}/>
             <Newsline posts={props.posts}
                       dataUser={props.dataUser}
                       userData={props.userData}/>

@@ -1,0 +1,18 @@
+
+.formControl {
+    display: inline-block;
+    margin: 5px 10px 5px 0;
+}
+
+.errorText {
+    color: red;
+}
+
+.formControl.error input {
+    border: 2px solid red;
+}
+
+.input {
+    display: inline-block;
+}
+
