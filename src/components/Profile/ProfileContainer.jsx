@@ -1,44 +1,50 @@
 import {connect} from "react-redux";
 import ProfileUser from "./ProfileUser";
-import React from "react";
-import {getUserProfile, getUserStatus, updateUserStatus} from "../../Redux/profile-reducer";
+import React, {useEffect} from "react";
+import {
+    addPostActionCreator,
+    getUserProfile,
+    getUserStatus,
+    setUserData,
+    updateAvatar,
+    updateUserStatus
+} from "../../Redux/profile-reducer";
 import Fetching from "../Fetching/Fetching";
 import WithRouter from "../WithRouter/WithRouter";
 import {withAuthRedirect} from "../withAuthRedirect/withAuthRedirect";
 import {compose} from "redux";
 
-class Profile extends React.Component {
-    componentDidMount() {
-        let userId = this.props.router.params.userId;
-        this.props.getUserProfile(userId);
-        this.props.getUserStatus(userId)
-    }
+function Profile(props) {
 
-    render() {
-        
-        return (<>
-                {!this.props.userData || this.props.isFetching ?
-                    <Fetching/> :
-                    <ProfileUser {...this.props}/>
-                }
-            </>
-        );
-    }
+    useEffect(() => {
+        let userId = props.router.params.userId;
+        props.getUserProfile(userId);
+        props.getUserStatus(userId)
+    }, [props.router.params.userId])
+
+    return (<>
+            {!props.userData || props.isFetching ?
+                <Fetching/> :
+                <ProfileUser {...props}/>
+            }
+        </>
+    );
 }
 
 const mapStateToProps = (state) => ({
     posts: state.profilePage.posts,
-    NewPostText: state.profilePage.NewPostText,
     userData: state.profilePage.userData,
     userId: state.profilePage.userId,
-    dataUser: state.dataUser,
     isFetching: state.profilePage.isFetching,
-    userStatus: state.profilePage.userStatus
+    userStatus: state.profilePage.userStatus,
 })
 
 export default compose(
     withAuthRedirect,
-    connect(mapStateToProps, {getUserProfile, getUserStatus, updateUserStatus}),
+    connect(mapStateToProps, {
+        getUserProfile, getUserStatus, updateUserStatus, updateAvatar,
+        setUserData, addPostActionCreator
+    }),
     WithRouter
 )(Profile);
 

@@ -1,8 +1,14 @@
-.advertising {
+.profileBlockForm {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
-    width: 282px;
+    width: 700px;
     height: 800px;
     grid-area: advertising;
     padding: 20px;
@@ -21,7 +27,7 @@
     background-color: #e3e3e3;
 }
 
-.aboutMeBlock, .lookingForAJobBlock, .contacts {
+.aboutMeBlock, .lookingForAJobBlock, .contacts, .fullNameBlock {
     margin-bottom: 18px;
 }
 
@@ -29,7 +35,7 @@
     margin-top: 18px;
 }
 
-.headerlookingForAJob, .headerAboutMe, .lookingForAJobDescriptionHeader, .contactHeader {
+.headerlookingForAJob, .headerAboutMe, .lookingForAJobDescriptionHeader, .contactHeader, .headerFullName {
     color: #222222;
     font-weight: 600;
 }
@@ -38,6 +44,25 @@
     margin-bottom: 12px;
 }
 
-.contact {
-    margin-bottom: 5px;
+.contactsForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.contactForm {
+    position: absolute;
+    left: 120px;
+}
+
+.errorText {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.textariaField {
+    width: 300px;
+    height: 100px;
 }

@@ -1,3 +1,27 @@
+.loginWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://ndlink.org/wp-content/uploads/2019/02/Annimbg.gif");
+    background-position: center center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.loginForm {
+    background-color: rgba(255, 255, 255, 0.75);
+    width: 500px;
+    height: 600px;
+    border-radius: 10px;
+    text-align: center;
+}
+
 
 .formControl {
     display: inline-block;
@@ -16,3 +40,64 @@
     display: inline-block;
 }
 
+.loginForm {
+    padding-top: 100px;
+    color: #222222;
+}
+
+.loginForm button {
+    width: 100px;
+    height: 30px;
+    border: 1px solid #222222;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.loginForm button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.testData {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #222222;
+    gap: 10px;
+    font-weight: bold;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.testData :last-child {
+    font-weight: 400;
+}
+
+.testData :last-child span {
+    font-weight: bold;
+}
+
+.testData :last-child :first-child {
+    margin-bottom: 3px;
+}
+
+.loginForm h1 {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.inputField {
+    width: 300px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    outline: none;
+}
+
+.rememberMeField {
+    margin-top: 5px;
+}
+
+/*
+https://kartinkin.net/uploads/posts/2022-06/1654646200_54-kartinkin-net-p-kartinki-sotsialnikh-setei-59.jpg
+https://thumbs.dreamstime.com/b/изображение-сети-d-пре-стави-о-social-47293406.jpg
+*/

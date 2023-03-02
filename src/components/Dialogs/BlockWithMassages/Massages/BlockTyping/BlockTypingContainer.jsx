@@ -22,7 +22,8 @@ import BlockTypingReduxForm from "./BlockTyping";
 
 const mapStateToProps = (state, props) => {
     return {
-        userId: props.userId
+        userId: props.userId,
+        dialogsPage: state.dialogsPage
     }
 }
 const mapDispatchToProps = (dispatch) => {

@@ -7,13 +7,13 @@ import {Field, reduxForm} from "redux-form";
 const BlockTyping = (props) => {
 
     const onSubmit = (dataSubmit) => {
-        console.log(dataSubmit)
-        props.addMassageActionCreator(props.userId, dataSubmit.fieldTypingMassage)
+        props.addMassageActionCreator({userId: props.userId, NewMassageText: dataSubmit.fieldTypingMassage});
+        dataSubmit.fieldTypingMassage = ""
     }
 
     return (
         <div className={styles.writeMassage}>
-            <BlockTypingReduxForm onSubmit={onSubmit}/>
+            <BlockTypingReduxForm {...props} onSubmit={onSubmit}/>
         </div>
     )
 }

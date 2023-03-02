@@ -4,8 +4,8 @@ import BlockTypingContainer from "./BlockTyping/BlockTypingContainer";
 
 const Massages = (props) => {
 
-    let massagesCreate = props.massages.map((massage) => (
-        <Message massage={massage}/>
+    let massagesCreate = props.massages.map((massage, i) => (
+        <Message massage={massage} key={i}/>
     ));
     return (
         <div className={styles.massagesProfiles}>

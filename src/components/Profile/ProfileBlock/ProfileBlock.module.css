@@ -2,7 +2,7 @@
     background-color: #fff;
     border-radius: 10px;
     grid-area: profileBlock;
-    height: 400px;
+    padding-bottom: 15px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, .05);
 }
 
@@ -53,4 +53,9 @@
     font-family: Montserrat, sans-serif;
     font-weight: 500;
     margin-bottom: 4px;
+}
+
+.avatarUser input {
+    margin-top: 10px;
+    /*width: 135px;*/
 }

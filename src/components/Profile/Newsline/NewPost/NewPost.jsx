@@ -1,10 +1,12 @@
 import styles from "./NewPost.module.css"
 import React from "react";
 import {Field, reduxForm} from "redux-form";
+import {connect} from "react-redux";
 
 const NewPost = (props) => {
     const onSubmit = (dataSubmit) => {
         props.addPostActionCreator(dataSubmit.newPostText);
+        dataSubmit.newPostText = ""
     }
     return (
         <div className={styles.newPost}>
@@ -27,7 +29,7 @@ const NewPostForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div className={styles.textInputBlock}>
-                <img src={props.dataUser.avatar} alt="avatar"/>
+                <img src={props.userData.photos.small} alt="avatar"/>
                 <Field placeholder="What's on your mind?" component={"textarea"} name={"newPostText"}
                        validate={[required, maxLength15]}/>
                 <div className={styles.addFile}></div>
@@ -41,4 +43,4 @@ const NewPostFormRedux = reduxForm({
     form: "newPostForm"
 })(NewPostForm)
 
-export default NewPost;
+export default connect(null, null)(NewPost);

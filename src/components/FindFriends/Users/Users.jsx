@@ -1,23 +1,27 @@
 import React from "react";
 import User from "./User/User";
 import styles from "./Users.module.css";
+import Paginator from "../../Paginator/Paginator";
 
 const Users = (props) => {
-    const pages = props.users.map((el, index) => {
-        return <span onClick={(e) => props.onCurrentPageButton(e.currentTarget.innerText)}
-                     key={el.id}
-                     className={props.currentPage === index + 1 ? styles.active : ""}>{index + 1}</span>
-    })
 
     const users = props.users.map(u => {
         return <User user={u} key={u.id} follow={props.follow}
                      unfollow={props.unfollow}
                      disabledFollowButton={props.disabledFollowButton}/>
     })
+
+    let paginator = <Paginator onCurrentPageButton={props.onCurrentPageButton}
+                               currentPage={props.currentPage}
+                               portionUsersCount={props.portionUsersCount}
+                               totalCountPages={props.totalCountPages}
+                               countPages={10}/>
+
     return (
         <div className={styles.findFriends}>
-            <div className={styles.pagesCount}>{pages}</div>
+            {paginator}
             {users}
+            {paginator}
         </div>
     )
 }

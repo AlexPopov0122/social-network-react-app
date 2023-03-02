@@ -5,7 +5,7 @@ import {getAuthMe, logout} from "../../Redux/auth-reducer";
 import {getUserProfile} from "../../Redux/profile-reducer";
 
 class HeaderContainer extends React.Component {
-    
+
     render() {
         return (
             <Header {...this.props} onLogoutButtonClick={this.onLogoutButtonClick}/>
@@ -15,8 +15,7 @@ class HeaderContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        authUserData: state.authUserData,
-        userData: state.profilePage.userData,
+        userData: state.authUserData.userData,
         isUserAuth: state.authUserData.isUserAuth
     }
 }

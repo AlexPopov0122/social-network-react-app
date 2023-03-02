@@ -1,0 +1,14 @@
+.active {
+    color: #222222;
+    font-weight: bold;
+}
+
+.paginatorWrapper {
+    margin: 10px auto;
+    display: flex;
+    gap: 8px;
+}
+
+.paginatorWrapper span {
+    cursor: pointer;
+}

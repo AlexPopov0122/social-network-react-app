@@ -1,4 +1,91 @@
 import {followAPI, UsersAPI} from "../api/api";
+import {createSlice} from "@reduxjs/toolkit";
+
+let initialState = {
+    users: [],
+    count: 10,
+    currentPage: 1,
+    totalCountPages: 0,
+    isFetching: true,
+    disabledFollowButton: []
+};
+
+const findFriendsReducer = createSlice({
+    name: "findFriendsReducer",
+    initialState,
+    reducers: {
+        setUsers: (state, action) => {
+            state.users = action.payload.users
+        },
+        setFollowStatus: (state, action) => {
+            state.users.forEach((u, i) => {
+                if (u.id === action.payload.userId) {
+                    state.users[i].followed = action.payload.followed
+                }
+            })
+        },
+        toggleFollowDisabledStatus: (state, action) => {
+            state.disabledFollowButton = action.payload.isFetching ?
+                [...state.disabledFollowButton, action.payload.userId]
+                : [state.disabledFollowButton.filter(dis => dis !== action.payload.userId)]
+        },
+        setCurrentPage: (state, action) => {
+            state.currentPage = +action.payload.page
+        },
+        setTotalCount: (state, action) => {
+            state.totalCountPages = Math.ceil(action.payload.total / state.count)
+        },
+        toggleFetching: (state, action) => {
+            state.isFetching = action.payload.isFetching
+        }
+    }
+})
+const {actions, reducer} = findFriendsReducer;
+export const {
+    setUsers,
+    toggleFollowDisabledStatus,
+    setCurrentPage,
+    setTotalCount,
+    toggleFetching,
+    setFollowStatus
+} = actions;
+
+export const getUsers = (currentPage, count) => async (dispatch) => {
+    dispatch(setCurrentPage({page: currentPage}))
+    dispatch(toggleFetching({isFetching: true}))
+    try {
+        const data = await UsersAPI.getUsers(currentPage, count)
+        dispatch(toggleFetching({isFetching: false}))
+        dispatch(setUsers({users: data.items}))
+        dispatch(setTotalCount({total: data.totalCount}))
+    } catch (error) {
+        //console.log(error)
+    }
+
+}
+
+export const follow = (userId) => async (dispatch) => {
+    dispatch(toggleFollowDisabledStatus({userId, isFetching: true}))
+    const data = await followAPI.follow(userId)
+    if (data.resultCode === 0) {
+        dispatch(setFollowStatus({userId, followed: true}))
+    }
+    dispatch(toggleFollowDisabledStatus({userId, isFetching: false}))
+}
+
+export const unfollow = (userId) => async (dispatch) => {
+    dispatch(toggleFollowDisabledStatus({userId, isFetching: true}))
+    const data = await followAPI.unfollow(userId)
+    if (data.resultCode === 0) {
+        dispatch(setFollowStatus({userId, followed: false}))
+    }
+    dispatch(toggleFollowDisabledStatus({userId, isFetching: false}))
+}
+export default reducer;
+
+
+/*import {followAPI, UsersAPI} from "../api/api";
+import {createAction} from "@reduxjs/toolkit";
 
 const SET_USERS = "SET_USERS";
 const FOLLOW = "FOLLOW";
@@ -24,7 +111,7 @@ const findFriendsReducer = (state = initialState, action) => {
         case SET_USERS: {
             return {
                 ...state,
-                users: action.users
+                users: action.payload.users
             }
         }
         case SET_FOLLOW_STATUS:
@@ -41,7 +128,7 @@ const findFriendsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: state.users.map(u => {
-                    if (u.id === action.userId) {
+                    if (u.id === action.payload.userId) {
                         return {...u, followed: true}
                     }
                     return u
@@ -89,8 +176,14 @@ const findFriendsReducer = (state = initialState, action) => {
     }
 
 }
-export const setUsers = (users) => ({type: SET_USERS, users});
-export const followAccept = (id) => ({type: FOLLOW, userId: id});
+export const setUsers = createAction(SET_USERS, (users) => {
+    return {
+        payload: {
+            users
+        }
+    }
+});
+export const followAccept = createAction(FOLLOW);
 export const unfollowAccept = (id) => ({type: UNFOLLOW, userId: id});
 export const toggleFollowDisabledStatus = (id, isFetching) => ({
     type: TOGGLE_FOLLOW_DISABLED_STATUS,
@@ -117,7 +210,7 @@ export const follow = (userId) => (dispatch) => {
     followAPI.follow(userId)
         .then(data => {
             if (data.resultCode === 0) {
-                dispatch(followAccept(userId))
+                dispatch(followAccept({userId}))
             }
             dispatch(toggleFollowDisabledStatus(userId, false))
         })
@@ -134,4 +227,4 @@ export const unfollow = (userId) => (dispatch) => {
         })
 }
 
-export default findFriendsReducer;
+export default findFriendsReducer;*/

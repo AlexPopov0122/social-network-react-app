@@ -12,7 +12,7 @@ import {compose} from "redux";
 import {
     getCount,
     getCurrentPage, getDisabledFollowButton,
-    getFoundUsers, getFoundUsersSelector,
+    getFoundUsersSelector,
     getIsFetching,
     getTotalCountPage
 } from "../../Selectors/find-friends-selectors";
@@ -24,7 +24,7 @@ class FindFriends extends React.Component {
     }
 
     onCurrentPageButton(page) {
-        this.props.getUsers(page)
+        this.props.getUsers(page, this.props.count)
     }
 
     render() {
@@ -36,7 +36,9 @@ class FindFriends extends React.Component {
                        follow={this.props.follow}
                        unfollow={this.props.unfollow}
                        onCurrentPageButton={this.onCurrentPageButton.bind(this)}
-                       disabledFollowButton={this.props.disabledFollowButton}/>
+                       disabledFollowButton={this.props.disabledFollowButton}
+                       portionUsersCount={this.props.count}
+                       totalCountPages={this.props.totalCountPages}/>
             }
         </>
     }
@@ -47,7 +49,7 @@ const mapStateToProps = (state) => {
         users: getFoundUsersSelector(state),
         count: getCount(state),
         currentPage: getCurrentPage(state),
-        totalCountPage: getTotalCountPage(state),
+        totalCountPages: getTotalCountPage(state),
         isFetching: getIsFetching(state),
         disabledFollowButton: getDisabledFollowButton(state)
     }

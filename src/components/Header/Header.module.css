@@ -4,7 +4,36 @@
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .03);
 }
 
-.header img {
-    width: 20px;
-    height: 20px;
+.headerBody {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #222222;
+}
+
+.headerAuth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+.headerAvatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.headerBody button {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    margin-right: 10px;
+}
+
+.headerBody button:hover {
+    background-color: #d9d9d9;
 }

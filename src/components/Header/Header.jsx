@@ -9,11 +9,13 @@ const Header = (props) => {
             {
                 // Проверяю авторизован ли пользователь
                 (props.isUserAuth && props.userData)
-                    ? <>
-                        <img src={props.userData.photos.small}/>
-                        <div> {props.authUserData.login} </div>
+                    ? <div className={styles.headerBody}>
+                        <div className={styles.headerAuth}>
+                            <img className={styles.headerAvatar} src={props.userData.photos.small}/>
+                            <div className={styles.headerFullName}> {props.userData.fullName} </div>
+                        </div>
                         <button onClick={props.logout}>logout</button>
-                    </>
+                    </div>
                     : <NavLink to="/login">Login</NavLink>
             }
         </header>

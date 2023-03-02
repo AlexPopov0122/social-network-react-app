@@ -1,6 +1,7 @@
 import dataUserReducer from "./dataUser-reducer";
+import {createSlice} from "@reduxjs/toolkit";
 
-const ADD_MASSAGE = "ADD_MASSAGE";
+// const ADD_MASSAGE = "ADD_MASSAGE";
 
 let initialState = {
     dataUsersDialogs: [{
@@ -243,35 +244,23 @@ let initialState = {
 
 let dataUserCopy = {...dataUserReducer()};
 
-const dialogsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_MASSAGE: {
-            let stateCopy = {...state};
-            stateCopy.usersMassages = [...state.usersMassages]
+const dialogsReducer = createSlice({
+    name: "dialogsReducer",
+    initialState,
+    reducers: {
+        addMassageActionCreator: (state, action) => {
             let newMassage = {
-                massage: action.NewMassageText,
+                massage: action.payload.NewMassageText,
                 userName: dataUserCopy.name,
                 avatar: dataUserCopy.avatar
             }
-            stateCopy.usersMassages[action.userId].massages.push(newMassage);
-            return stateCopy;
-            // if (/\S+/.test(newMassage.massage)) {
-            //     stateCopy.usersMassages[action.userId].massages.push(newMassage);
-            //     stateCopy.NewMassageText = "";
-            //     return stateCopy;
-            // } else {
-            //     return {
-            //         ...state,
-            //         NewMassageText: ""
-            //     }
-            // }
-        }
-        default:
-            return state;
+            state.usersMassages[action.payload.userId].massages.push(newMassage)
+        },
     }
+})
+const {actions, reducer} = dialogsReducer;
+export const {
+    addMassageActionCreator
+} = actions;
 
-}
-
-export const addMassageActionCreator = (id, NewMassageText) => ({type: ADD_MASSAGE, userId: id, NewMassageText})
-
-export default dialogsReducer;
+export default reducer;

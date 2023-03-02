@@ -1,53 +1,72 @@
+import React from "react";
 import "./App.css";
 import OnlineBar from "./components/OnlineBar/OnlineBar";
 import NavBar from "./components/NavBar/NavBar";
-import Dialogs from "./components/Dialogs/Dialogs";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
-import FindFriendsContainer from "./components/FindFriends/FindFriendsContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
-import {Component} from "react";
-import {connect} from "react-redux";
+import {Suspense, useEffect} from "react";
+import {connect, Provider} from "react-redux";
 import {getAuthMe} from "./Redux/auth-reducer";
 import Fetching from "./components/Fetching/Fetching";
+import store from "./Redux/redux-store";
 
-class App extends Component {
+const FindFriendsContainer = React.lazy(() => import("./components/FindFriends/FindFriendsContainer"));
+const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
+const Login = React.lazy(() => import("./components/Login/Login"));
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 
-    componentDidMount() {
-        this.props.getAuthMe()
+const App = (props) => {
+
+    const catchAllUnhandledErrors = (promiseRejectionEvent) => {
+        alert("Some server error")
     }
 
-    render() {
+    useEffect(() => {
+        props.getAuthMe()
+        window.addEventListener("unhandledrejection", catchAllUnhandledErrors)
+        return window.removeEventListener("unhandledrejection", catchAllUnhandledErrors)
+    }, [])
 
-        if (!this.props.isInitial) {
-            return <Fetching/>
-        }
-
-        return (
-            <BrowserRouter>
-                <div className="app-wrapper">
-                    <HeaderContainer/>
-                    <NavBar/>
-                    <div className="mainContentWrapper">
-                        <Routes>
-                            <Route path="/dialogs/*"
-                                   element={<Dialogs/>}/>
-                            <Route path="/profile/:userId?"
-                                   element={<ProfileContainer/>}/>
-                            <Route path="/news/*" element={<News/>}/>
-                            <Route path="/findFriends/*"
-                                   element={<FindFriendsContainer/>}/>
-                            <Route path="/login/*"
-                                   element={<Login/>}/>
-                        </Routes>
-                    </div>
-                    <OnlineBar/>
-                </div>
-            </BrowserRouter>
-        );
+    if (!props.isInitial) {
+        return <Fetching/>
     }
+
+    return (
+        <div className="app-wrapper">
+            <HeaderContainer/>
+            <NavBar/>
+            <div className="mainContentWrapper">
+                <Suspense fallback={<div><Fetching/></div>}>
+                    <Routes>
+                        <Route path="/" element={<Navigate to={'/login'}/>}/>
+                        <Route path="/dialogs/*"
+                               element={<Dialogs/>}/>
+                        <Route path="/profile/:userId?"
+                               element={<ProfileContainer/>}/>
+                        <Route path="/news/*" element={<News/>}/>
+                        <Route path="/findFriends/*"
+                               element={<FindFriendsContainer/>}/>
+                        <Route path="/login/*"
+                               element={<Login/>}/>
+                    </Routes>
+                </Suspense>
+            </div>
+            <OnlineBar/>
+        </div>
+    );
 }
 
-export default connect(null, {getAuthMe})(App);
+const AppContainer = connect(null, {getAuthMe})(App);
+
+const MainApp = (props) => {
+    return (
+        <Provider store={store}>
+            <HashRouter /*basename={process.env.PUBLIC_URL}*/>
+                <AppContainer isInitial={store.getState().authUserData.isInitial}/>
+            </HashRouter>
+        </Provider>
+    )
+}
+
+export default MainApp;

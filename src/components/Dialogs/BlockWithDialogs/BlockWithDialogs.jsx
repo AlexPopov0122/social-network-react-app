@@ -6,7 +6,7 @@ const BlockWithDialogs = (props) => {
     return (<div className={styles.BlockContentDialogs}>
         {props.dataUsersDialogs.map(companion => (
             <Dialog id={companion.id} companionName={companion.companionName}
-                    avatarCompanion={companion.avatarCompanion}/>
+                    avatarCompanion={companion.avatarCompanion} key={companion.id}/>
         ))}
 
     </div>)

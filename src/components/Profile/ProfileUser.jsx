@@ -6,12 +6,14 @@ import ProfileBlock from "./ProfileBlock/ProfileBlock";
 const ProfileUser = (props) => {
     return (
         <div className={styles.mainContent}>
-            <ProfileBlock dataUser={props.dataUser} userData={props.userData}
-                          userStatus={props.userStatus} updateUserStatus={props.updateUserStatus}/>
+            <ProfileBlock userData={props.userData}
+                          userStatus={props.userStatus} updateUserStatus={props.updateUserStatus}
+                          isOwnProfile={!props.router.params.userId}
+                          updateAvatar={props.updateAvatar}/>
             <Newsline posts={props.posts}
-                      dataUser={props.dataUser}
-                      userData={props.userData}/>
-            <Advertising/>
+                      userData={props.userData}
+                      addPostActionCreator={props.addPostActionCreator}/>
+            <Advertising userData={props.userData} setUserData={props.setUserData}/>
         </div>
     );
 }

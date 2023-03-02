@@ -1,4 +1,5 @@
-import {createSelector} from "reselect";
+import {createSelector} from "@reduxjs/toolkit";
+
 
 export const getFoundUsers = (state) => {
     return state.findFriendsPage.users
@@ -10,7 +11,7 @@ export const getCurrentPage = (state) => {
     return state.findFriendsPage.currentPage
 }
 export const getTotalCountPage = (state) => {
-    return state.findFriendsPage.totalCountPage
+    return state.findFriendsPage.totalCountPages
 }
 export const getIsFetching = (state) => {
     return state.findFriendsPage.isFetching

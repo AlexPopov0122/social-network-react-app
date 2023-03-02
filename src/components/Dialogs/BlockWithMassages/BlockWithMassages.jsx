@@ -6,6 +6,7 @@ const BlockWithMassages = (props) => {
 
     let massagesAdd = props.usersMassages.map(user => (
         <Route path={`/${user.id}`}
+               key={user.id}
                element={<Massages userId={user.id} massages={user.massages}/>}/>
     ));
 
