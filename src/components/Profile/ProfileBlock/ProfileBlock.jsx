@@ -27,7 +27,8 @@ const ProfileBlock = (props) => {
                 </div>
                 <div className={styles.userName}>
                     <div className={styles.name}>{props.userData.fullName}</div>
-                    <StatusWithUseState userStatus={props.userStatus} updateUserStatus={props.updateUserStatus}/>
+                    <StatusWithUseState isOwnProfile={props.isOwnProfile}
+                                        userStatus={props.userStatus} updateUserStatus={props.updateUserStatus}/>
                 </div>
             </div>
 

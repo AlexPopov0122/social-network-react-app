@@ -1,7 +1,7 @@
 import styles from "./NavBar.module.css"
 import {NavLink} from "react-router-dom";
 
-let setActive = NavDate => NavDate.isActive ? styles.active : "";
+let setActive = NavDate => NavDate.isActive ? styles.active : styles.navLinks;
 
 const NavBar = () => {
     return (
@@ -12,14 +12,14 @@ const NavBar = () => {
             <NavLink to="/dialogs"
                      className={setActive}>Messages</NavLink>
 
-            <NavLink to="/news" className={setActive}>News</NavLink>
+            <NavLink to="/news" className={setActive}>News <span>(in developing)</span> </NavLink>
 
-            <NavLink to="/music" className={setActive}>Music</NavLink>
+            <NavLink to="/music" className={setActive}>Music <span>(in developing)</span> </NavLink>
 
             <NavLink to="/findFriends"
                      className={setActive}>Find friends</NavLink>
 
-            <NavLink to="/settings" className={setActive}>Settings</NavLink>
+            <NavLink to="/settings" className={setActive}>Settings <span>(in developing)</span> </NavLink>
         </nav>
     );
 };

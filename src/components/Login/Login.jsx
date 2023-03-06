@@ -71,8 +71,8 @@ const LoginForm = (props) => {
             <p className={styles.testData}>
                 <div>Тестовые логин и пароль:</div>
                 <div>
-                    <div><span>Login:</span> free@samuraijs.com</div>
-                    <div><span>Password:</span> free</div>
+                    <div><span>Login:</span> test.accout.2023@gmail.com</div>
+                    <div><span>Password:</span> testAccount_2023</div>
                 </div>
             </p>
 

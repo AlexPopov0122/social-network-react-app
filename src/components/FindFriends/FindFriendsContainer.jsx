@@ -20,11 +20,11 @@ import {
 class FindFriends extends React.Component {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.count)
+        this.props.getUsers([this.props.currentPage, this.props.count])
     }
 
     onCurrentPageButton(page) {
-        this.props.getUsers(page, this.props.count)
+        this.props.getUsers([page, this.props.count])
     }
 
     render() {

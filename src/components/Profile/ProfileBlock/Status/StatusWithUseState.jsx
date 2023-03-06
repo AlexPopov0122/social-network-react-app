@@ -7,7 +7,7 @@ const StatusWithUseState = (props) => {
     let [statusText, setStatusText] = useState(props.userStatus);
 
     const activateEditMode = () => {
-        setEditMode(true)
+        props.isOwnProfile && setEditMode(true)
     }
 
     const deactivateEditMode = () => {

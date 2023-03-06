@@ -24,3 +24,7 @@
 .active {
     color: #222222;
 }
+
+.navLinks span {
+    font-size: 15px;
+}
