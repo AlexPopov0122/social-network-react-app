@@ -2,7 +2,7 @@ import React from "react";
 import {Field, reduxForm} from "redux-form";
 import {Input} from "../FieldControls/FieldControls";
 import {connect} from "react-redux";
-import {login, logout} from "../../Redux/auth-reducer";
+import {login, logout} from "../../Redux/Reducers/auth-reducer.ts";
 import {Navigate} from "react-router-dom";
 import styles from "../FieldControls/FieldControls.module.css"
 import classNames from "classnames";

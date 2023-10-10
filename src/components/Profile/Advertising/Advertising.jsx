@@ -1,7 +1,7 @@
 import styles from "./Advertising.module.css";
 import Contacts from "./Contacts/Contacts";
 import ProfileBlockForm from "./ProfileBlockForm";
-import {setEditMode} from "../../../Redux/profile-reducer";
+import {setEditMode} from "../../../Redux/Reducers/profile-reducer.ts";
 import {connect} from "react-redux";
 
 const Advertising = (props) => {

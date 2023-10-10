@@ -7,11 +7,11 @@ import News from "./components/News/News";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {Suspense, useEffect} from "react";
 import {connect, Provider} from "react-redux";
-import {getAuthMe} from "./Redux/auth-reducer";
 import Fetching from "./components/Fetching/Fetching";
-import store from "./Redux/redux-store";
+import store from "./Redux/Reducers/redux-store";
+import {getAuthMe} from "./Redux/Reducers/auth-reducer";
 
-const FindFriendsContainer = React.lazy(() => import("./components/FindFriends/FindFriendsContainer"));
+const FindFriendsContainer = React.lazy(() => import("./components/FindFriends/FindFriendsContainer.tsx"));
 const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
 const Login = React.lazy(() => import("./components/Login/Login"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));

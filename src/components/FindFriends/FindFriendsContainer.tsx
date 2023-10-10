@@ -3,7 +3,7 @@ import {
     follow,
     unfollow,
     getUsers
-} from "../../Redux/find-friend-reducer";
+} from "../../Redux/Reducers/find-friend-reducer";
 import React from "react";
 import Users from "./Users/Users";
 import Fetching from "../Fetching/Fetching";
@@ -16,14 +16,29 @@ import {
     getIsFetching,
     getTotalCountPage
 } from "../../Selectors/find-friends-selectors";
+import {TState} from "../../Redux/Reducers/redux-store";
 
-class FindFriends extends React.Component {
+type Props = {
+    getUsers: (arg: Array<number>) => void
+    currentPage: number
+    count: number
+    isFetching: boolean
+    users: any
+    follow: any
+    // (userId: number) => void
+    unfollow: any
+    disabledFollowButton: any
+    totalCountPages: any
+
+}
+
+class FindFriends extends React.Component<Props> {
 
     componentDidMount() {
         this.props.getUsers([this.props.currentPage, this.props.count])
     }
 
-    onCurrentPageButton(page) {
+    onCurrentPageButton(page: number) {
         this.props.getUsers([page, this.props.count])
     }
 
@@ -44,7 +59,7 @@ class FindFriends extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: TState) => {
     return {
         users: getFoundUsersSelector(state),
         count: getCount(state),
@@ -58,7 +73,7 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps, {
         follow, unfollow, getUsers
-    }),
+    } as any),
     withAuthRedirect
 )(FindFriends)
 

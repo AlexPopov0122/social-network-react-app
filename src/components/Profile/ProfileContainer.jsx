@@ -8,7 +8,7 @@ import {
     setUserData,
     updateAvatar,
     updateUserStatus
-} from "../../Redux/profile-reducer";
+} from "../../Redux/Reducers/profile-reducer.ts";
 import Fetching from "../Fetching/Fetching";
 import WithRouter from "../WithRouter/WithRouter";
 import {withAuthRedirect} from "../withAuthRedirect/withAuthRedirect";

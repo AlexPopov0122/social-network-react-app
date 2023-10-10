@@ -1,13 +1,17 @@
-import {authMe, profileAPI, SecurityAPI} from "../api/api";
+import {authMe, profileAPI, SecurityAPI} from "../../api/api";
 import {changeUserId, setUserProfile} from "./profile-reducer";
 import {stopSubmit} from "redux-form";
+import {
+    InitialStateType, SetCaptchaUrlType, SetInitialType, SetUserAuthProfileType,
+    SetUserAuthType
+} from "../RedusersTypes/authReducerTypes";
 
-const SET_USER_AUTH = "SET_USER_AUTH";
-const SET_INITIAL = "SET_INITIAL";
-const SET_CAPTCHA_URL = "SET_CAPTCHA_URL";
-const SET_USER_AUTH_PROFILE = "SET_USER_AUTH_PROFILE";
+export const SET_USER_AUTH: "authUserData/SET_USER_AUTH" = "authUserData/SET_USER_AUTH";
+export const SET_INITIAL: "authUserData/SET_INITIAL" = "authUserData/SET_INITIAL";
+export const SET_CAPTCHA_URL: "authUserData/SET_CAPTCHA_URL" = "authUserData/SET_CAPTCHA_URL";
+export const SET_USER_AUTH_PROFILE: "authUserData/SET_USER_AUTH_PROFILE" = "authUserData/SET_USER_AUTH_PROFILE";
 
-let initialState = {
+let initialState: InitialStateType = {
     login: null,
     id: null,
     email: null,
@@ -17,9 +21,8 @@ let initialState = {
     captchaUrl: null
 };
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
-
         case SET_USER_AUTH:
             return {
                 ...state,
@@ -48,12 +51,19 @@ const authReducer = (state = initialState, action) => {
     }
 
 }
-export const setUserAuth = (login, id, email, isUserAuth) => ({type: SET_USER_AUTH, login, id, email, isUserAuth});
-export const setUserAuthProfile = (userData) => ({type: SET_USER_AUTH_PROFILE, userData});
-export const setInitial = () => ({type: SET_INITIAL});
-export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl});
+export const setUserAuth: SetUserAuthType = (login, id, email, isUserAuth) => ({
+    type: SET_USER_AUTH,
+    login,
+    id,
+    email,
+    isUserAuth
+});
+export const setUserAuthProfile: SetUserAuthProfileType =
+    (userData) => ({type: SET_USER_AUTH_PROFILE, userData});
+export const setInitial: SetInitialType = () => ({type: SET_INITIAL});
+export const setCaptchaUrl: SetCaptchaUrlType = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl});
 
-export const getAuthMe = () => (dispatch) => {
+export const getAuthMe = () => (dispatch: any) => {
     authMe.getAuthMe()
         .then(dataMe => {
             if (dataMe.resultCode === 0) {
@@ -72,7 +82,7 @@ export const getAuthMe = () => (dispatch) => {
         })
 }
 
-export const login = (email, password, rememberMe, captcha) => (dispatch) => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => (dispatch: any) => {
     authMe.login(email, password, rememberMe, captcha)
         .then(data => {
             if (data.data.resultCode === 0) {
@@ -90,7 +100,7 @@ export const login = (email, password, rememberMe, captcha) => (dispatch) => {
         })
 }
 
-export const logout = () => (dispatch) => {
+export const logout = () => (dispatch: any) => {
     authMe.logout()
         .then(dispatch(setUserAuth(null, null, null, false)))
 }

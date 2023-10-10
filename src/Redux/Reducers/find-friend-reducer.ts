@@ -1,10 +1,11 @@
-import {followAPI, UsersAPI} from "../api/api";
+import {followAPI, UsersAPI} from "../../api/api";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {InitialStateType} from "../RedusersTypes/findFriendsReducerTypes";
 
 
 export const getUsers = createAsyncThunk(
     "findFriendsReducer/getUsers",
-    async ([currentPage, count], {rejectWithValue, dispatch}) => {
+    async ([currentPage, count]: any, {rejectWithValue, dispatch}) => {
         dispatch(setCurrentPage({page: currentPage}))
         dispatch(toggleFetching({isFetching: true}))
         try {
@@ -12,7 +13,6 @@ export const getUsers = createAsyncThunk(
             dispatch(toggleFetching({isFetching: false}))
             dispatch(setUsers({users: data.items}))
             dispatch(setTotalCount({total: data.totalCount}))
-
             if (data.error) {
                 throw new Error("Some error.")
             }
@@ -22,7 +22,7 @@ export const getUsers = createAsyncThunk(
         }
 
     });
-export const follow = (userId) => async (dispatch) => {
+export const follow = (userId: number) => async (dispatch: any) => {
     dispatch(toggleFollowDisabledStatus({userId, isFetching: true}))
     const data = await followAPI.follow(userId)
     if (data.resultCode === 0) {
@@ -31,7 +31,7 @@ export const follow = (userId) => async (dispatch) => {
     dispatch(toggleFollowDisabledStatus({userId, isFetching: false}))
 };
 
-export const unfollow = (userId) => async (dispatch) => {
+export const unfollow = (userId: number) => async (dispatch: any) => {
     dispatch(toggleFollowDisabledStatus({userId, isFetching: true}))
     const data = await followAPI.unfollow(userId)
     if (data.resultCode === 0) {
@@ -40,13 +40,13 @@ export const unfollow = (userId) => async (dispatch) => {
     dispatch(toggleFollowDisabledStatus({userId, isFetching: false}))
 };
 
-let initialState = {
+const initialState: InitialStateType = {
     users: [],
     count: 10,
     currentPage: 1,
     totalCountPages: 0,
     isFetching: true,
-    disabledFollowButton: []
+    disabledFollowButton: [],
 };
 
 const findFriendsReducer = createSlice({
@@ -79,13 +79,13 @@ const findFriendsReducer = createSlice({
         }
     },
     extraReducers: {
-        [getUsers.pending]: (state, action) => {
+        [getUsers.pending as any]: (state, action) => {
             // state.something = "loading";
         },
-        [getUsers.fulfilled]: (state, action) => {
+        [getUsers.fulfilled as any]: (state, action) => {
             // state.something = "resolved";
         },
-        [getUsers.rejected]: (state, action) => {
+        [getUsers.rejected as any]: (state, action) => {
             // state.something = "rejected";
             alert(action.payload) // Some error.
         }

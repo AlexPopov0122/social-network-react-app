@@ -1,35 +1,29 @@
-import dataUserReducer from "./dataUser-reducer";
 import {createSlice} from "@reduxjs/toolkit";
+import {InitialStateType, UserMassageType} from "../RedusersTypes/dialogsReduserTypes";
 
-// const ADD_MASSAGE = "ADD_MASSAGE";
-
-let initialState = {
+let initialState: InitialStateType = {
     dataUsersDialogs: [{
         id: 0,
-        companionName: "Yulia Kharisova",
-        avatarCompanion: "https://i.imgur.com/vNMhAT4.jpg"
-    }, {
-        id: 1,
         companionName: "Dilovar Salokhov",
         avatarCompanion: "https://i.imgur.com/vNMhAT4.jpg"
     }, {
-        id: 2,
+        id: 1,
         companionName: "Tatiana Starchikova",
         avatarCompanion: "https://i.imgur.com/vNMhAT4.jpg"
     }, {
-        id: 3,
+        id: 2,
         companionName: "Nadezhda Zmeykina",
         avatarCompanion: "https://i.imgur.com/vNMhAT4.jpg"
     }, {
-        id: 4,
+        id: 3,
         companionName: "Damir Shulanov",
         avatarCompanion: "https://i.imgur.com/vNMhAT4.jpg"
     }, {
-        id: 5,
+        id: 4,
         companionName: "Tatyana Popova",
         avatarCompanion: "https://i.imgur.com/vNMhAT4.jpg"
     }, {
-        id: 6,
+        id: 5,
         companionName: "Dmitry Ilyin",
         avatarCompanion: "https://i.imgur.com/vNMhAT4.jpg"
     }
@@ -40,17 +34,17 @@ let initialState = {
         massages: [
             {
                 massage: "Hello",
-                userName: "Yulia Kharisova",
+                userName: "Dilovar Salokhov",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
-                massage: "Hi!",
+                massage: "Hello",
                 userName: "Alexander Popov",
                 avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
             },
             {
                 massage: "How are you?",
-                userName: "Yulia Kharisova",
+                userName: "Dilovar Salokhov",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -60,7 +54,7 @@ let initialState = {
             },
             {
                 massage: "Fine. Thanks",
-                userName: "Yulia Kharisova",
+                userName: "Dilovar Salokhov",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             }
         ],
@@ -69,7 +63,7 @@ let initialState = {
         massages: [
             {
                 massage: "Hello",
-                userName: "Dilovar Salokhov",
+                userName: "Tatiana Starchikova",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -79,7 +73,7 @@ let initialState = {
             },
             {
                 massage: "How are you?",
-                userName: "Dilovar Salokhov",
+                userName: "Tatiana Starchikova",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -89,7 +83,7 @@ let initialState = {
             },
             {
                 massage: "Fine. Thanks",
-                userName: "Dilovar Salokhov",
+                userName: "Tatiana Starchikova",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             }
         ],
@@ -98,7 +92,7 @@ let initialState = {
         massages: [
             {
                 massage: "Hello",
-                userName: "Tatiana Starchikova",
+                userName: "Nadezhda Zmeykina",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -108,7 +102,7 @@ let initialState = {
             },
             {
                 massage: "How are you?",
-                userName: "Tatiana Starchikova",
+                userName: "Nadezhda Zmeykina",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -118,7 +112,7 @@ let initialState = {
             },
             {
                 massage: "Fine. Thanks",
-                userName: "Tatiana Starchikova",
+                userName: "Nadezhda Zmeykina",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             }
         ],
@@ -127,7 +121,7 @@ let initialState = {
         massages: [
             {
                 massage: "Hello",
-                userName: "Nadezhda Zmeykina",
+                userName: "Damir Shulanov",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -137,7 +131,7 @@ let initialState = {
             },
             {
                 massage: "How are you?",
-                userName: "Nadezhda Zmeykina",
+                userName: "Damir Shulanov",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -147,7 +141,7 @@ let initialState = {
             },
             {
                 massage: "Fine. Thanks",
-                userName: "Nadezhda Zmeykina",
+                userName: "Damir Shulanov",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             }
         ],
@@ -156,7 +150,7 @@ let initialState = {
         massages: [
             {
                 massage: "Hello",
-                userName: "Damir Shulanov",
+                userName: "Tatyana Popova",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -166,7 +160,7 @@ let initialState = {
             },
             {
                 massage: "How are you?",
-                userName: "Damir Shulanov",
+                userName: "Tatyana Popova",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             },
             {
@@ -176,41 +170,12 @@ let initialState = {
             },
             {
                 massage: "Fine. Thanks",
-                userName: "Damir Shulanov",
+                userName: "Tatyana Popova",
                 avatar: "https://i.imgur.com/vNMhAT4.jpg"
             }
         ],
     }, {
         id: 5,
-        massages: [
-            {
-                massage: "Hello",
-                userName: "Tatyana Popova",
-                avatar: "https://i.imgur.com/vNMhAT4.jpg"
-            },
-            {
-                massage: "Hello",
-                userName: "Alexander Popov",
-                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
-            },
-            {
-                massage: "How are you?",
-                userName: "Tatyana Popova",
-                avatar: "https://i.imgur.com/vNMhAT4.jpg"
-            },
-            {
-                massage: "I'm fine. Thanks. And you?",
-                userName: "Alexander Popov",
-                avatar: "https://avatars.yandex.net/get-music-user-playlist/38125/637255038.1036.49762/m1000x1000?1586165315944&webp=false"
-            },
-            {
-                massage: "Fine. Thanks",
-                userName: "Tatyana Popova",
-                avatar: "https://i.imgur.com/vNMhAT4.jpg"
-            }
-        ],
-    }, {
-        id: 6,
         massages: [
             {
                 massage: "Hello",
@@ -242,17 +207,15 @@ let initialState = {
     ]
 };
 
-let dataUserCopy = {...dataUserReducer()};
-
 const dialogsReducer = createSlice({
     name: "dialogsReducer",
     initialState,
     reducers: {
         addMassageActionCreator: (state, action) => {
-            let newMassage = {
+            let newMassage: UserMassageType = {
                 massage: action.payload.NewMassageText,
-                userName: dataUserCopy.name,
-                avatar: dataUserCopy.avatar
+                userName: action.payload.userName,
+                avatar: action.payload.avatar.large
             }
             state.usersMassages[action.payload.userId].massages.push(newMassage)
         },

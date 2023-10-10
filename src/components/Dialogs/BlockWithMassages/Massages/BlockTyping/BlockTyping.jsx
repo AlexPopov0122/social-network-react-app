@@ -7,8 +7,11 @@ import {Field, reduxForm} from "redux-form";
 const BlockTyping = (props) => {
 
     const onSubmit = (dataSubmit) => {
-        props.addMassageActionCreator({userId: props.userId, NewMassageText: dataSubmit.fieldTypingMassage});
-        dataSubmit.fieldTypingMassage = ""
+        props.addMassageActionCreator({
+            userId: props.userId, NewMassageText: dataSubmit.fieldTyping,
+            userName: props.userName, avatar: props.avatar
+        });
+        dataSubmit.fieldTyping = ""
     }
 
     return (
@@ -23,7 +26,7 @@ const BlockTypingForm = (props) => {
         <form onSubmit={props.handleSubmit} className={styles.writeMassage}>
             <Field type={"text"}
                    className={styles.blockTyping}
-                   name={"fieldTypingMassage"}
+                   name={"fieldTyping"}
                    placeholder={"Start typing..."}
                    component={"input"}/>
             <button className={styles.submitMassage}>&#10148;</button>

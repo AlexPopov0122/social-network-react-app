@@ -1,17 +1,26 @@
-import {authMe, profileAPI} from "../api/api";
+import {authMe, profileAPI} from "../../api/api";
 import {stopSubmit} from "redux-form";
-import {setUserAuthProfile} from "./auth-reducer";
+// @ts-ignore
+import {setUserAuthProfile} from "./auth-reducer.ts";
+import {
+    AddPostActionCreatorType, ChangeUserIdType,
+    InitialState,
+    SetEditModeType,
+    SetUserProfileType, SetUserStatusType, ToggleFetchingType, UpdateAvatarSuccessType
+} from "../RedusersTypes/profileReducerTypes";
+import {UserDataType} from "../RedusersTypes/authReducerTypes";
+import {TState} from "../Reducers/redux-store";
 
-const ADD_POST = "ADD-POST";
-const SET_USER_PROFILE = "SET_USER_PROFILE";
-const TOGGLE_FETCHING = "TOGGLE_FETCHING";
-const CHANGE_USER_ID = "CHANGE_USER_ID";
-const TOGGLE_AUTH = "TOGGLE_AUTH";
-const SET_USER_STATUS = "SET_USER_STATUS";
-const UPDATE_AVATAR_SUCCESS = "UPDATE_AVATAR_SUCCESS";
-const SET_EDIT_MODE = "SET_EDIT_MODE";
+export const ADD_POST: "profile/ADD-POST" = "profile/ADD-POST";
+export const SET_USER_PROFILE: "profile/SET_USER_PROFILE" = "profile/SET_USER_PROFILE";
+export const TOGGLE_FETCHING: "profile/TOGGLE_FETCHING" = "profile/TOGGLE_FETCHING";
+export const CHANGE_USER_ID: "profile/CHANGE_USER_ID" = "profile/CHANGE_USER_ID";
+export const TOGGLE_AUTH: "profile/TOGGLE_AUTH" = "profile/TOGGLE_AUTH";
+export const SET_USER_STATUS: "profile/SET_USER_STATUS" = "profile/SET_USER_STATUS";
+export const UPDATE_AVATAR_SUCCESS: "profile/UPDATE_AVATAR_SUCCESS" = "profile/UPDATE_AVATAR_SUCCESS";
+export const SET_EDIT_MODE: "profile/SET_EDIT_MODE" = "profile/SET_EDIT_MODE";
 
-let initialState = {
+const initialState: InitialState = {
     posts: [
         {
             id: 1,
@@ -55,7 +64,7 @@ let initialState = {
     editModeProfileBlock: false
 };
 
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -69,18 +78,6 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 posts: [newPost, ...state.posts],
             }
-            // if (/\S+/.test(newPost.text)) {
-            //     return {
-            //         ...state,
-            //         posts: [newPost, ...state.posts],
-            //         NewPostText: ""
-            //     }
-            // } else {
-            //     return {
-            //         ...state,
-            //         NewPostText: ""
-            //     }
-            // }
         }
         case SET_USER_PROFILE: {
             return {
@@ -126,15 +123,15 @@ const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const addPostActionCreator = (newPostText) => ({type: ADD_POST, newPostText});
-export const setUserProfile = (userData) => ({type: SET_USER_PROFILE, userData});
-export const setEditMode = (editModeProfileBlock) => ({type: SET_EDIT_MODE, editModeProfileBlock});
-export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
-export const toggleFetching = (isFetching) => ({type: TOGGLE_FETCHING, isFetching});
-export const changeUserId = (userId) => ({type: CHANGE_USER_ID, userId});
-export const updateAvatarSuccess = (photos) => ({type: UPDATE_AVATAR_SUCCESS, photos});
+export const addPostActionCreator: AddPostActionCreatorType = (newPostText) => ({type: ADD_POST, newPostText});
+export const setUserProfile: SetUserProfileType = (userData) => ({type: SET_USER_PROFILE, userData});
+export const setEditMode: SetEditModeType = (editModeProfileBlock) => ({type: SET_EDIT_MODE, editModeProfileBlock});
+export const setUserStatus: SetUserStatusType = (status) => ({type: SET_USER_STATUS, status});
+export const toggleFetching: ToggleFetchingType = (isFetching) => ({type: TOGGLE_FETCHING, isFetching});
+export const changeUserId: ChangeUserIdType = (userId) => ({type: CHANGE_USER_ID, userId});
+export const updateAvatarSuccess: UpdateAvatarSuccessType = (photos) => ({type: UPDATE_AVATAR_SUCCESS, photos});
 
-export const getUserProfile = (userId) => (dispatch) => {
+export const getUserProfile = (userId: number) => (dispatch: any) => {
     if (!userId) {
         authMe.getAuthMe().then(data => {
             userId = data.data.id
@@ -155,9 +152,9 @@ export const getUserProfile = (userId) => (dispatch) => {
     }
 }
 
-export const getUserStatus = (userId) => async (dispatch) => {
+export const getUserStatus = (userId: number) => async (dispatch: any) => {
 
-    const setStatus = async (userId) => {
+    const setStatus = async (userId: number) => {
         let responseStatus = await profileAPI.getUserStatus(userId)
         dispatch(setUserStatus(responseStatus.data))
     }
@@ -171,7 +168,7 @@ export const getUserStatus = (userId) => async (dispatch) => {
     }
 }
 
-export const updateUserStatus = (status) => (dispatch) => {
+export const updateUserStatus = (status: string) => (dispatch: any) => {
     profileAPI.setUserStatus(status)
         .then(data => {
             if (data.data.resultCode === 0) {
@@ -179,7 +176,7 @@ export const updateUserStatus = (status) => (dispatch) => {
             }
         })
 }
-export const updateAvatar = (photo) => (dispatch) => {
+export const updateAvatar = (photo: any) => (dispatch: any) => {
     profileAPI.updateAvatar(photo)
         .then(response => {
             if (response.resultCode === 0) {
@@ -187,14 +184,16 @@ export const updateAvatar = (photo) => (dispatch) => {
             }
         })
 }
-export const setUserData = (userData) => (dispatch, getState) => {
+export const setUserData = (userData: UserDataType) => (dispatch: any, getState: TState) => {
     profileAPI.setUserData(userData)
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(getUserProfile(getState().authUserData.id))
                 dispatch(setEditMode(false))
             } else {
-                let massage = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
+                let massage: string = response.data.messages.length > 0
+                    ? response.data.messages[0]
+                    : "Some error";
                 dispatch(stopSubmit("profileBlockForm", {_error: massage}))
             }
         })

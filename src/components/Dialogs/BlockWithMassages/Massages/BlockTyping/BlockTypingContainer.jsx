@@ -1,6 +1,6 @@
-import {addMassageActionCreator} from "../../../../../Redux/dialogs-reducer";
 import {connect} from "react-redux";
-import BlockTypingReduxForm from "./BlockTyping";
+import BlockTyping from "./BlockTyping";
+import {addMassageActionCreator} from "../../../../../Redux/Reducers/dialogs-reducer.ts";
 
 // const BlockTypingContainer = (props) => {
 //
@@ -23,7 +23,9 @@ import BlockTypingReduxForm from "./BlockTyping";
 const mapStateToProps = (state, props) => {
     return {
         userId: props.userId,
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        userName: state.authUserData.login,
+        avatar: state.authUserData.userData.photos
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -34,5 +36,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const BlockTypingContainer = connect(mapStateToProps, mapDispatchToProps)(BlockTypingReduxForm);
+const BlockTypingContainer = connect(mapStateToProps, mapDispatchToProps)(BlockTyping);
 export default BlockTypingContainer;
