@@ -7,7 +7,7 @@ export type InitialStateType = {
     disabledFollowButton: Array<number>
 };
 
-type UsersType = {
+export type UsersType = {
     name: string
     id: number
     uniqueUrlName: string | null

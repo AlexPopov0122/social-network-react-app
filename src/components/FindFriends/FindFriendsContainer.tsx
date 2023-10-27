@@ -17,19 +17,19 @@ import {
     getTotalCountPage
 } from "../../Selectors/find-friends-selectors";
 import {TState} from "../../Redux/Reducers/redux-store";
+import {
+    TGeneralFindFriendsContainerMSTP, TGeneralFindFriendsContainerMDTP
+} from "./Users/usersTypes";
 
-type Props = {
-    getUsers: (arg: Array<number>) => void
-    currentPage: number
-    count: number
+type Props = TMapStateToProps & TMapDispatchToProps
+
+type TMapStateToProps = TGeneralFindFriendsContainerMSTP & {
     isFetching: boolean
-    users: any
-    follow: any
-    // (userId: number) => void
-    unfollow: any
-    disabledFollowButton: any
-    totalCountPages: any
+    count: number
+}
 
+type TMapDispatchToProps = TGeneralFindFriendsContainerMDTP & {
+    getUsers: ([currentPage, count]: Array<number>) => void
 }
 
 class FindFriends extends React.Component<Props> {
@@ -38,7 +38,7 @@ class FindFriends extends React.Component<Props> {
         this.props.getUsers([this.props.currentPage, this.props.count])
     }
 
-    onCurrentPageButton(page: number) {
+    onCurrentPageButton(page: number): void {
         this.props.getUsers([page, this.props.count])
     }
 
@@ -71,10 +71,13 @@ const mapStateToProps = (state: TState) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {
+    connect<TMapStateToProps, TMapDispatchToProps>
+    // @ts-ignore
+    (mapStateToProps, {
         follow, unfollow, getUsers
-    } as any),
+    }),
     withAuthRedirect
+    // @ts-ignore
 )(FindFriends)
 
 // const FindFriendsContainer = withAuthRedirect(connect(mapStateToProps, {

@@ -1,10 +1,17 @@
-import {useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import styles from "./Status.module.css";
+import {FC} from "react";
 
-const StatusWithUseState = (props) => {
+type Props = {
+    isOwnProfile: boolean
+    userStatus: string
+    updateUserStatus: (statusText: string) => void
+}
 
-    let [editMode, setEditMode] = useState(false);
-    let [statusText, setStatusText] = useState(props.userStatus);
+const StatusWithUseState: FC<Props> = (props) => {
+
+    let [editMode, setEditMode] = useState<boolean>(false);
+    let [statusText, setStatusText] = useState<string>(props.userStatus);
 
     const activateEditMode = () => {
         props.isOwnProfile && setEditMode(true)
@@ -15,7 +22,7 @@ const StatusWithUseState = (props) => {
         props.updateUserStatus(statusText)
     }
 
-    const changeStatus = (value) => {
+    const changeStatus = (value: string) => {
         setStatusText(value)
     }
 
@@ -24,12 +31,12 @@ const StatusWithUseState = (props) => {
     }, [props.userStatus])
 
     return (
-        <div className={styles.status}>{props.userData}
+        <div className={styles.status}>
             {
                 editMode
                     ? <input onBlur={deactivateEditMode} autoFocus={true} type={"text"}
                              value={statusText}
-                             onChange={(e) => changeStatus(e.target.value)}/>
+                             onChange={(e: ChangeEvent<HTMLInputElement>) => changeStatus(e.target.value)}/>
                     : <div
                         onDoubleClick={activateEditMode}>{statusText || "No Status"}</div>
             }

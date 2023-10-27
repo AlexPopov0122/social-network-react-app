@@ -1,11 +1,12 @@
-import {followAPI, UsersAPI} from "../../api/api";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, Dispatch, PayloadAction, Slice} from "@reduxjs/toolkit";
 import {InitialStateType} from "../RedusersTypes/findFriendsReducerTypes";
+import {UsersAPI} from "../../api/getUsers";
+import {followAPI} from "../../api/followAPI";
 
 
 export const getUsers = createAsyncThunk(
     "findFriendsReducer/getUsers",
-    async ([currentPage, count]: any, {rejectWithValue, dispatch}) => {
+    async ([currentPage, count]: Array<number>, {rejectWithValue, dispatch}) => {
         dispatch(setCurrentPage({page: currentPage}))
         dispatch(toggleFetching({isFetching: true}))
         try {
@@ -31,7 +32,7 @@ export const follow = (userId: number) => async (dispatch: any) => {
     dispatch(toggleFollowDisabledStatus({userId, isFetching: false}))
 };
 
-export const unfollow = (userId: number) => async (dispatch: any) => {
+export const unfollow = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(toggleFollowDisabledStatus({userId, isFetching: true}))
     const data = await followAPI.unfollow(userId)
     if (data.resultCode === 0) {
@@ -49,11 +50,11 @@ const initialState: InitialStateType = {
     disabledFollowButton: [],
 };
 
-const findFriendsReducer = createSlice({
+const findFriendsReducer: Slice<InitialStateType> = createSlice({
     name: "findFriendsReducer",
     initialState,
     reducers: {
-        setUsers: (state, action) => {
+        setUsers: (state, action: PayloadAction<any>) => {
             state.users = action.payload.users
         },
         setFollowStatus: (state, action) => {
@@ -92,6 +93,7 @@ const findFriendsReducer = createSlice({
     }
 })
 const {actions, reducer} = findFriendsReducer;
+
 export const {
     setUsers,
     toggleFollowDisabledStatus,
@@ -100,5 +102,5 @@ export const {
     toggleFetching,
     setFollowStatus
 } = actions;
-
+type SetUsersT = typeof setUsers
 export default reducer;

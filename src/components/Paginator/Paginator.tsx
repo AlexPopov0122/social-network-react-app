@@ -1,24 +1,32 @@
 import styles from "./Paginator.module.css";
-import {useState} from "react";
+import {FC, useState} from "react";
 
-export const Paginator = (props) => {
+type Props = {
+    currentPage: number
+    totalCountPages: number
+    onCurrentPageButton: (page: number) => void
+    portionUsersCount: number
+    countPages: number
+}
 
-    let portionNumber = Math.ceil(props.currentPage / props.countPages)
+export const Paginator: FC<Props> = (props) => {
 
-    let [pageNumber, setPageNumber] = useState(portionNumber)
+    const portionNumber: number = Math.ceil(props.currentPage / props.countPages)
 
-    let pages = [];
+    const [pageNumber, setPageNumber] = useState<number>(portionNumber)
 
-    let lastPageInPortion = props.countPages * pageNumber;
-    let firstPageInPortion = lastPageInPortion - 9;
+    const pages = [];
+
+    const lastPageInPortion: number = props.countPages * pageNumber;
+    const firstPageInPortion: number = lastPageInPortion - 9;
 
     for (let i = firstPageInPortion; i <= lastPageInPortion; i++) {
         pages.push(i)
     }
 
-    let portion = pages.map((page) => {
+    const portion = pages.map((page) => {
         return (
-            <span onClick={(e) => props.onCurrentPageButton(e.currentTarget.innerText)}
+            <span onClick={(e) => props.onCurrentPageButton(+e.currentTarget.innerText)}
                   className={props.currentPage === page ? styles.active : ""} key={page}>{page}</span>
         )
     })

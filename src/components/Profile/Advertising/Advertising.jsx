@@ -1,9 +1,11 @@
 import styles from "./Advertising.module.css";
 import Contacts from "./Contacts/Contacts";
 import ProfileBlockForm from "./ProfileBlockForm";
-import {setEditMode} from "../../../Redux/Reducers/profile-reducer.ts";
+import {actionsProfile} from "../../../Redux/Reducers/profile-reducer";
 import {connect} from "react-redux";
 
+
+const {setEditMode} = actionsProfile;
 const Advertising = (props) => {
 
     const contacts = Object.keys(props.userData.contacts).map(constact => {

@@ -1,3 +1,5 @@
+import {TActionsAuth} from "../Reducers/auth-reducer";
+
 type DataUsersType = Array<DataUserType>
 type DataUserType = {
     id: number | null

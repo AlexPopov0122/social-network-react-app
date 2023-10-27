@@ -1,15 +1,13 @@
-import {authMe, profileAPI, SecurityAPI} from "../../api/api";
-import {changeUserId, setUserProfile} from "./profile-reducer";
+import {ResultCode, ResultCodeWithCaptcha} from "../../api/api";
+import {actionsProfile, TActionsProfile} from "./profile-reducer";
 import {stopSubmit} from "redux-form";
 import {
-    InitialStateType, SetCaptchaUrlType, SetInitialType, SetUserAuthProfileType,
-    SetUserAuthType
+    InitialStateType, UserDataType
 } from "../RedusersTypes/authReducerTypes";
-
-export const SET_USER_AUTH: "authUserData/SET_USER_AUTH" = "authUserData/SET_USER_AUTH";
-export const SET_INITIAL: "authUserData/SET_INITIAL" = "authUserData/SET_INITIAL";
-export const SET_CAPTCHA_URL: "authUserData/SET_CAPTCHA_URL" = "authUserData/SET_CAPTCHA_URL";
-export const SET_USER_AUTH_PROFILE: "authUserData/SET_USER_AUTH_PROFILE" = "authUserData/SET_USER_AUTH_PROFILE";
+import {ActionsTypes, BaseThunkType} from "./redux-store";
+import {authMe} from "../../api/authMe";
+import {profileAPI} from "../../api/profileAPI";
+import {SecurityAPI} from "../../api/securityAPI";
 
 let initialState: InitialStateType = {
     login: null,
@@ -21,9 +19,9 @@ let initialState: InitialStateType = {
     captchaUrl: null
 };
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: TActionsAuth): InitialStateType => {
     switch (action.type) {
-        case SET_USER_AUTH:
+        case "authUserData/SET_USER_AUTH":
             return {
                 ...state,
                 login: action.login,
@@ -31,17 +29,17 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
                 email: action.email,
                 isUserAuth: action.isUserAuth
             }
-        case SET_USER_AUTH_PROFILE:
+        case "authUserData/SET_USER_AUTH_PROFILE":
             return {
                 ...state,
                 userData: action.userData
             }
-        case SET_INITIAL:
+        case "authUserData/SET_INITIAL":
             return {
                 ...state,
                 isInitial: true
             }
-        case SET_CAPTCHA_URL:
+        case "authUserData/SET_CAPTCHA_URL":
             return {
                 ...state,
                 captchaUrl: action.captchaUrl
@@ -51,59 +49,70 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
     }
 
 }
-export const setUserAuth: SetUserAuthType = (login, id, email, isUserAuth) => ({
-    type: SET_USER_AUTH,
-    login,
-    id,
-    email,
-    isUserAuth
-});
-export const setUserAuthProfile: SetUserAuthProfileType =
-    (userData) => ({type: SET_USER_AUTH_PROFILE, userData});
-export const setInitial: SetInitialType = () => ({type: SET_INITIAL});
-export const setCaptchaUrl: SetCaptchaUrlType = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl});
 
-export const getAuthMe = () => (dispatch: any) => {
+export const actionsAuth = {
+    setUserAuthProfile:
+    (userData: UserDataType | null) => ({type: "authUserData/SET_USER_AUTH_PROFILE", userData} as const),
+    setInitial: () => ({type: "authUserData/SET_INITIAL"} as const),
+    setCaptchaUrl: (captchaUrl: string) => ({type: "authUserData/SET_CAPTCHA_URL", captchaUrl} as const),
+    setUserAuth: (login: string | null, id: number | null, email: string | null, isUserAuth: boolean) => ({
+        type: "authUserData/SET_USER_AUTH",
+        login,
+        id,
+        email,
+        isUserAuth
+    } as const)
+}
+
+type ActionsAuthMeTypes = BaseThunkType<TActionsAuth | TActionsProfile>
+export const getAuthMe = (): ActionsAuthMeTypes => (dispatch) => {
     authMe.getAuthMe()
         .then(dataMe => {
-            if (dataMe.resultCode === 0) {
+            if (dataMe.resultCode === ResultCode.Success) {
                 profileAPI.getUserProfile(dataMe.data.id)
                     .then(dataProfile => {
-                        dispatch(setUserProfile(dataProfile))
-                        dispatch(setUserAuthProfile(dataProfile))
-                        dispatch(changeUserId(dataMe.data.id))
-                        dispatch(setUserAuth(dataMe.data.login, dataMe.data.id, dataMe.data.email, true))
-                        dispatch(setInitial())
+                        dispatch(actionsProfile.setUserProfile(dataProfile))
+                        dispatch(actionsAuth.setUserAuthProfile(dataProfile))
+                        dispatch(actionsProfile.changeUserId(dataMe.data.id))
+                        dispatch(actionsAuth.setUserAuth(dataMe.data.login, dataMe.data.id, dataMe.data.email, true))
+                        dispatch(actionsAuth.setInitial())
                     })
             } else {
-                dispatch(setUserAuth(null, null, null, false))
-                dispatch(setInitial())
+                dispatch(actionsAuth.setUserAuth(null, null, null, false))
+                dispatch(actionsAuth.setInitial())
             }
         })
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => (dispatch: any) => {
+
+export const login = (email: string, password: string, rememberMe: boolean, captcha: any): ThunkType => (dispatch) => {
     authMe.login(email, password, rememberMe, captcha)
         .then(data => {
-            if (data.data.resultCode === 0) {
+            if (data.resultCode === ResultCode.Success) {
                 dispatch(getAuthMe())
             } else {
-                if (data.data.resultCode === 10) {
+                if (data.resultCode === ResultCodeWithCaptcha.Captcha) {
                     SecurityAPI.getCaptchaUrl()
                         .then(response => {
-                            dispatch(setCaptchaUrl(response.data.url))
+                            dispatch(actionsAuth.setCaptchaUrl(response.url))
                         })
                 }
-                let massage = data.data.messages.length > 0 ? data.data.messages[0] : "Some error";
+                let massage = data.messages.length > 0 ? data.messages[0] : "Some error";
                 dispatch(stopSubmit("loginForm", {_error: massage}))
             }
         })
 }
 
-export const logout = () => (dispatch: any) => {
+export const logout = (): ThunkType => (dispatch) => {
     authMe.logout()
-        .then(dispatch(setUserAuth(null, null, null, false)))
+        .then(
+            // @ts-ignore
+            dispatch(actions.setUserAuth(null, null, null, false))
+        )
 }
+
+export type TActionsAuth = ActionsTypes<typeof actionsAuth>
+type ThunkType = BaseThunkType<TActionsAuth>
 
 
 export default authReducer;

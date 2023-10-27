@@ -2,17 +2,19 @@ import {connect} from "react-redux";
 import ProfileUser from "./ProfileUser";
 import React, {useEffect} from "react";
 import {
-    addPostActionCreator,
+    actionsProfile,
     getUserProfile,
     getUserStatus,
     setUserData,
     updateAvatar,
     updateUserStatus
-} from "../../Redux/Reducers/profile-reducer.ts";
+} from "../../Redux/Reducers/profile-reducer";
 import Fetching from "../Fetching/Fetching";
 import WithRouter from "../WithRouter/WithRouter";
 import {withAuthRedirect} from "../withAuthRedirect/withAuthRedirect";
 import {compose} from "redux";
+
+const {addPostActionCreator} = actionsProfile;
 
 function Profile(props) {
 

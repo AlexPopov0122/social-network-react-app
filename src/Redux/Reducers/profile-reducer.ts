@@ -1,24 +1,12 @@
-import {authMe, profileAPI} from "../../api/api";
-import {stopSubmit} from "redux-form";
-// @ts-ignore
-import {setUserAuthProfile} from "./auth-reducer.ts";
+import {FormAction, stopSubmit} from "redux-form";
+import {actionsAuth} from "./auth-reducer";
 import {
-    AddPostActionCreatorType, ChangeUserIdType,
-    InitialState,
-    SetEditModeType,
-    SetUserProfileType, SetUserStatusType, ToggleFetchingType, UpdateAvatarSuccessType
+    InitialState, PostsType
 } from "../RedusersTypes/profileReducerTypes";
-import {UserDataType} from "../RedusersTypes/authReducerTypes";
-import {TState} from "../Reducers/redux-store";
-
-export const ADD_POST: "profile/ADD-POST" = "profile/ADD-POST";
-export const SET_USER_PROFILE: "profile/SET_USER_PROFILE" = "profile/SET_USER_PROFILE";
-export const TOGGLE_FETCHING: "profile/TOGGLE_FETCHING" = "profile/TOGGLE_FETCHING";
-export const CHANGE_USER_ID: "profile/CHANGE_USER_ID" = "profile/CHANGE_USER_ID";
-export const TOGGLE_AUTH: "profile/TOGGLE_AUTH" = "profile/TOGGLE_AUTH";
-export const SET_USER_STATUS: "profile/SET_USER_STATUS" = "profile/SET_USER_STATUS";
-export const UPDATE_AVATAR_SUCCESS: "profile/UPDATE_AVATAR_SUCCESS" = "profile/UPDATE_AVATAR_SUCCESS";
-export const SET_EDIT_MODE: "profile/SET_EDIT_MODE" = "profile/SET_EDIT_MODE";
+import {PhotosType, UserDataType} from "../RedusersTypes/authReducerTypes";
+import {ActionsTypes, BaseThunkType} from "./redux-store";
+import {authMe} from "../../api/authMe";
+import {profileAPI} from "../../api/profileAPI";
 
 const initialState: InitialState = {
     posts: [
@@ -64,14 +52,15 @@ const initialState: InitialState = {
     editModeProfileBlock: false
 };
 
-const profileReducer = (state = initialState, action: any) => {
+const profileReducer = (state = initialState, action: TActionsProfile): InitialState => {
     switch (action.type) {
-        case ADD_POST: {
-            let newPost = {
+        case "profile/ADD-POST": {
+            const newPost: PostsType = {
+                id: 4,
                 text: action.newPostText,
                 files: [],
-                likes: 0,
-                comments: 0,
+                likes: "0",
+                comments: "0",
                 timePost: "Moment ago"
             }
             return {
@@ -79,88 +68,88 @@ const profileReducer = (state = initialState, action: any) => {
                 posts: [newPost, ...state.posts],
             }
         }
-        case SET_USER_PROFILE: {
+        case "profile/SET_USER_PROFILE": {
             return {
                 ...state,
                 userData: action.userData
             }
         }
-        case SET_EDIT_MODE: {
+        case "profile/SET_EDIT_MODE": {
             return {
                 ...state,
                 editModeProfileBlock: action.editModeProfileBlock
             }
         }
-        case SET_USER_STATUS: {
+        case "profile/SET_USER_STATUS": {
             return {
                 ...state,
                 userStatus: action.status
             }
         }
-        case UPDATE_AVATAR_SUCCESS: {
+        case "profile/UPDATE_AVATAR_SUCCESS": {
             return {
                 ...state,
-                userData: {...state.userData, photos: action.photos}
+                userData: {...state.userData, photos: action.photos} as UserDataType
             }
         }
-        case TOGGLE_FETCHING:
+        case "profile/TOGGLE_FETCHING":
             return {
                 ...state,
                 isFetching: action.isFetching
             }
-        case CHANGE_USER_ID:
+        case "profile/CHANGE_USER_ID":
             return {
                 ...state,
                 userId: action.userId
             }
-        case TOGGLE_AUTH:
-            return {
-                ...state,
-                isAuth: action.isAuth
-            }
         default:
             return state
+
     }
 }
 
-export const addPostActionCreator: AddPostActionCreatorType = (newPostText) => ({type: ADD_POST, newPostText});
-export const setUserProfile: SetUserProfileType = (userData) => ({type: SET_USER_PROFILE, userData});
-export const setEditMode: SetEditModeType = (editModeProfileBlock) => ({type: SET_EDIT_MODE, editModeProfileBlock});
-export const setUserStatus: SetUserStatusType = (status) => ({type: SET_USER_STATUS, status});
-export const toggleFetching: ToggleFetchingType = (isFetching) => ({type: TOGGLE_FETCHING, isFetching});
-export const changeUserId: ChangeUserIdType = (userId) => ({type: CHANGE_USER_ID, userId});
-export const updateAvatarSuccess: UpdateAvatarSuccessType = (photos) => ({type: UPDATE_AVATAR_SUCCESS, photos});
+export const actionsProfile = {
+    addPostActionCreator: (newPostText: string) => ({type: "profile/ADD-POST", newPostText} as const),
+    setUserProfile: (userData: UserDataType) => ({type: "profile/SET_USER_PROFILE", userData} as const),
+    setEditMode: (editModeProfileBlock: boolean) => ({type: "profile/SET_EDIT_MODE", editModeProfileBlock} as const),
+    setUserStatus: (status: string) => ({type: "profile/SET_USER_STATUS", status} as const),
+    toggleFetching: (isFetching: boolean) => ({type: "profile/TOGGLE_FETCHING", isFetching} as const),
+    changeUserId: (userId: number | null) => ({type: "profile/CHANGE_USER_ID", userId} as const),
+    updateAvatarSuccess: (photos: PhotosType) => ({type: "profile/UPDATE_AVATAR_SUCCESS", photos} as const)
+}
 
-export const getUserProfile = (userId: number) => (dispatch: any) => {
+
+
+export const getUserProfile = (userId: number | null): ThunkType => (dispatch) => {
     if (!userId) {
         authMe.getAuthMe().then(data => {
             userId = data.data.id
             profileAPI.getUserProfile(userId)
                 .then(data => {
-                    dispatch(setUserAuthProfile(data))
-                    dispatch(setUserProfile(data))
-                    dispatch(changeUserId(userId))
-                    dispatch(toggleFetching(false))
+                    dispatch(actionsAuth.setUserAuthProfile(data))
+                    dispatch(actionsProfile.setUserProfile(data))
+                    dispatch(actionsProfile.changeUserId(userId))
+                    dispatch(actionsProfile.toggleFetching(false))
                 })
         })
     } else {
         profileAPI.getUserProfile(userId)
             .then(data => {
-                dispatch(setUserProfile(data))
-                dispatch(toggleFetching(false))
+                dispatch(actionsProfile.setUserProfile(data))
+                dispatch(actionsProfile.toggleFetching(false))
             })
     }
 }
 
-export const getUserStatus = (userId: number) => async (dispatch: any) => {
+export const getUserStatus = (userId: number): ThunkType => async (dispatch) => {
 
     const setStatus = async (userId: number) => {
-        let responseStatus = await profileAPI.getUserStatus(userId)
-        dispatch(setUserStatus(responseStatus.data))
+        const responseStatus = await profileAPI.getUserStatus(userId)
+        dispatch(actionsProfile.setUserStatus(responseStatus))
     }
 
     if (!userId) {
-        let responseMe = await authMe.getAuthMe();
+        const responseMe = await authMe.getAuthMe();
         userId = responseMe.data.id
         setStatus(userId)
     } else {
@@ -168,28 +157,29 @@ export const getUserStatus = (userId: number) => async (dispatch: any) => {
     }
 }
 
-export const updateUserStatus = (status: string) => (dispatch: any) => {
+export const updateUserStatus = (status: string): ThunkType => (dispatch) => {
     profileAPI.setUserStatus(status)
         .then(data => {
             if (data.data.resultCode === 0) {
-                dispatch(setUserStatus(status))
+                dispatch(actionsProfile.setUserStatus(status))
             }
         })
 }
-export const updateAvatar = (photo: any) => (dispatch: any) => {
+export const updateAvatar = (photo: string): ThunkType => (dispatch) => {
     profileAPI.updateAvatar(photo)
         .then(response => {
             if (response.resultCode === 0) {
-                dispatch(updateAvatarSuccess(response.data.photos))
+                dispatch(actionsProfile.updateAvatarSuccess(response.data.photos))
             }
         })
 }
-export const setUserData = (userData: UserDataType) => (dispatch: any, getState: TState) => {
+
+export const setUserData = (userData: UserDataType): ThunkTypeWithForm => (dispatch, getState) => {
     profileAPI.setUserData(userData)
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(getUserProfile(getState().authUserData.id))
-                dispatch(setEditMode(false))
+                dispatch(actionsProfile.setEditMode(false))
             } else {
                 let massage: string = response.data.messages.length > 0
                     ? response.data.messages[0]
@@ -198,5 +188,10 @@ export const setUserData = (userData: UserDataType) => (dispatch: any, getState:
             }
         })
 }
+
+
+export type TActionsProfile = ActionsTypes<typeof actionsProfile> | any
+type ThunkType = BaseThunkType<TActionsProfile>
+type ThunkTypeWithForm = BaseThunkType<TActionsProfile | FormAction>
 
 export default profileReducer;

@@ -1,11 +1,12 @@
 // import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
 import profileReducer from "./profile-reducer";
 import dialogsReducer from "./dialogs-reducer";
-import {configureStore} from "@reduxjs/toolkit";
+import {Action, configureStore, ThunkAction} from "@reduxjs/toolkit";
 import findFriendsReducer from "./find-friend-reducer";
 import authReducer from "./auth-reducer";
 // import thunkMiddleware from "redux-thunk";
 import {reducer as formReducer} from "redux-form";
+
 
 const reducers = {
     profilePage: profileReducer,
@@ -16,14 +17,16 @@ const reducers = {
 };
 
 
-type TReducer = typeof reducers
-// @ts-ignore
-export type TState = ReturnType<TReducer>
-// let state: TState;
-
 export const store = configureStore({
-    reducer: {...reducers} as TState
+    reducer: {...reducers}
 })
+export type TState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+
+export type ActionsTypes<T extends {[key: string]: (...arg: any) => any}> =
+    ReturnType<T extends {[key: string]: infer U} ? U : never>
+
+export type BaseThunkType<A extends Action, R = void> = ThunkAction<R, TState, unknown, A>
 
 // @ts-ignore
 window.store = store;

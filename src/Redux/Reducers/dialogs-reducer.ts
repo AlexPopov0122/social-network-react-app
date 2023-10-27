@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction, Slice} from "@reduxjs/toolkit";
 import {InitialStateType, UserMassageType} from "../RedusersTypes/dialogsReduserTypes";
 
 let initialState: InitialStateType = {
@@ -207,11 +207,11 @@ let initialState: InitialStateType = {
     ]
 };
 
-const dialogsReducer = createSlice({
+const dialogsReducer: Slice<InitialStateType> = createSlice({
     name: "dialogsReducer",
     initialState,
     reducers: {
-        addMassageActionCreator: (state, action) => {
+        addMassageActionCreator: (state, action: PayloadAction<any>): void => {
             let newMassage: UserMassageType = {
                 massage: action.payload.NewMassageText,
                 userName: action.payload.userName,
