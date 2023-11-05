@@ -1,6 +1,8 @@
 import {connect} from "react-redux";
 import BlockTyping from "./BlockTyping";
-import {addMassageActionCreator} from "../../../../../Redux/Reducers/dialogs-reducer.ts";
+import {addMassageActionCreator} from "../../../../../Redux/Reducers/dialogs-reducer";
+import {TState} from "../../../../../Redux/Reducers/redux-store";
+import {PhotosType} from "../../../../../Redux/RedusersTypes/authReducerTypes";
 
 // const BlockTypingContainer = (props) => {
 //
@@ -20,21 +22,24 @@ import {addMassageActionCreator} from "../../../../../Redux/Reducers/dialogs-red
 //                         userId={props.userId}/>
 // }
 
-const mapStateToProps = (state, props) => {
+type Props = {
+    userId: number | null
+}
+
+export type MSTPBlockTyping = ReturnType<typeof mapStateToProps>
+
+const mapStateToProps = (state: TState, props: Props) => {
+    let avatar: PhotosType | string = ""
+    if (state.authUserData.userData) {
+        avatar = state.authUserData.userData.photos
+    }
     return {
         userId: props.userId,
         dialogsPage: state.dialogsPage,
         userName: state.authUserData.login,
-        avatar: state.authUserData.userData.photos
-    }
-}
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addMassageActionCreator: (id, NewMassageText) => {
-            dispatch(addMassageActionCreator(id, NewMassageText))
-        }
+        avatar: avatar
     }
 }
 
-const BlockTypingContainer = connect(mapStateToProps, mapDispatchToProps)(BlockTyping);
+const BlockTypingContainer = connect(mapStateToProps, {addMassageActionCreator})(BlockTyping);
 export default BlockTypingContainer;

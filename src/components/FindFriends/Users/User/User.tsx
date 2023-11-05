@@ -1,8 +1,17 @@
 import styles from "./User.module.css";
+// @ts-ignore
 import avatarDefault from "../../../../assets/images/avatar-default-photo.png";
 import {NavLink} from "react-router-dom";
+import {FC} from "react";
+import {UsersType} from "../../../../Redux/RedusersTypes/findFriendsReducerTypes";
+import {TGeneralFindFriendsContainerMDTP} from "../usersTypes";
 
-const User = (props) => {
+type Props = TGeneralFindFriendsContainerMDTP & {
+    user: UsersType
+    disabledFollowButton: Array<number>
+}
+
+const User: FC<Props> = (props) => {
     return (
         <div className={styles.user}>
             <NavLink to={`/profile/${props.user.id}`}>

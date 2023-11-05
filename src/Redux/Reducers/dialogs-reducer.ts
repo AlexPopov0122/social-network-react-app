@@ -226,4 +226,6 @@ export const {
     addMassageActionCreator
 } = actions;
 
+export type AddMassageActionCreator = typeof addMassageActionCreator
+
 export default reducer;

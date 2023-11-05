@@ -1,24 +1,29 @@
-import React from "react";
+import React, {FC} from "react";
 import "./App.css";
 import OnlineBar from "./components/OnlineBar/OnlineBar";
 import NavBar from "./components/NavBar/NavBar";
 import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
-import HeaderContainer from "./components/Header/HeaderContainer";
 import {Suspense, useEffect} from "react";
 import {connect, Provider} from "react-redux";
 import Fetching from "./components/Fetching/Fetching";
 import store from "./Redux/Reducers/redux-store";
 import {getAuthMe} from "./Redux/Reducers/auth-reducer";
+import Header from "./components/Header/Header";
 
-const FindFriendsContainer = React.lazy(() => import("./components/FindFriends/FindFriendsContainer.tsx"));
+const FindFriendsContainer = React.lazy(() => import("./components/FindFriends/FindFriendsContainer"));
 const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
 const Login = React.lazy(() => import("./components/Login/Login"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 
-const App = (props) => {
+type Props = {
+    getAuthMe: () => void
+    isInitial: boolean
+}
 
-    const catchAllUnhandledErrors = (promiseRejectionEvent) => {
+const App: FC<Props> = (props) => {
+
+    const catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
         alert("Some server error")
     }
 
@@ -34,7 +39,7 @@ const App = (props) => {
 
     return (
         <div className="app-wrapper">
-            <HeaderContainer/>
+            <Header/>
             <NavBar/>
             <div className="mainContentWrapper">
                 <Suspense fallback={<div><Fetching/></div>}>
@@ -59,7 +64,7 @@ const App = (props) => {
 
 const AppContainer = connect(null, {getAuthMe})(App);
 
-const MainApp = (props) => {
+const MainApp: FC = () => {
     return (
         <Provider store={store}>
             <HashRouter /*basename={process.env.PUBLIC_URL}*/>

@@ -1,9 +1,10 @@
 import styles from "./NavBar.module.css"
 import {NavLink} from "react-router-dom";
+import {FC} from "react";
 
-let setActive = NavDate => NavDate.isActive ? styles.active : styles.navLinks;
+let setActive = (NavDate: any): string => NavDate.isActive ? styles.active : styles.navLinks;
 
-const NavBar = () => {
+const NavBar: FC = () => {
     return (
         <nav className={styles.nav}>
             <NavLink to="/profile"

@@ -1,7 +1,8 @@
+// @ts-ignore
 import preloader from "../../assets/images/preloader2.svg";
-import React from "react";
+import React, {FC} from "react";
 
-const Fetching = (props) => {
+const Fetching: FC<any> = (props) => {
     return (
         <div style={{textAlign: "center"}}>
             <div role={'main'}></div>

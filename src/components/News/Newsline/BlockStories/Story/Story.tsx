@@ -1,6 +1,10 @@
 import styles from "./Story.module.css"
+import {FC} from "react";
 
-const Story = (props) => {
+type Props = {
+    text: string
+}
+const Story: FC<Props> = (props) => {
     return (
         <div className={styles.blockStory}>
             {props.text}

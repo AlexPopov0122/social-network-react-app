@@ -1,9 +1,11 @@
 import styles from "./Dialog.module.css"
 import {NavLink} from "react-router-dom";
+import {FC} from "react";
+import {DataUserType} from "../../../../Redux/RedusersTypes/dialogsReduserTypes";
 
-let setActive = NavDate => NavDate.isActive ? styles.active : "";
+let setActive = (NavDate: any): string => NavDate.isActive ? styles.active : "";
 
-function Dialog(props) {
+const Dialog: FC<DataUserType> = (props) => {
     return (
         <NavLink to={`/dialogs/${props.id}`} className={setActive}>
             <div className={styles.dialog}>

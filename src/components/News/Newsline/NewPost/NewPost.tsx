@@ -1,6 +1,7 @@
 import styles from "./NewPost.module.css"
+import {FC} from "react";
 
-const NewPost = () => {
+const NewPost: FC = () => {
     return (
         <div className= {styles.newPost}>
         create post

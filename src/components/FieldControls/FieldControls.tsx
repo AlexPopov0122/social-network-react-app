@@ -42,13 +42,13 @@ export function createField<T extends string> (placeholder: string | undefined,
                       type: string = "text",
                       validators: Array<FormValidatorType>,
                       component: FC<WrappedFieldProps>,
-                      className= undefined,
+                      className = undefined,
                       text = "", props = {}) {
-    return <div>
+    return <>
         <Field placeholder = {placeholder} name={name} type={type}
                validate={validators} component={component} className = {className}
                {...props}/> {text}
-    </div>
+    </>
 }
 //createField realisation
 {/*<div>*/}

@@ -4,10 +4,10 @@ import {
     unfollow,
     getUsers
 } from "../../Redux/Reducers/find-friend-reducer";
-import React from "react";
+import React, {ComponentType} from "react";
 import Users from "./Users/Users";
 import Fetching from "../Fetching/Fetching";
-import {withAuthRedirect} from "../withAuthRedirect/withAuthRedirect";
+import withAuthRedirect from "../withAuthRedirect/withAuthRedirect";
 import {compose} from "redux";
 import {
     getCount,
@@ -21,16 +21,13 @@ import {
     TGeneralFindFriendsContainerMSTP, TGeneralFindFriendsContainerMDTP
 } from "./Users/usersTypes";
 
-type Props = TMapStateToProps & TMapDispatchToProps
-
-type TMapStateToProps = TGeneralFindFriendsContainerMSTP & {
-    isFetching: boolean
-    count: number
-}
+type TMapStateToProps = ReturnType<typeof mapStateToProps>
 
 type TMapDispatchToProps = TGeneralFindFriendsContainerMDTP & {
     getUsers: ([currentPage, count]: Array<number>) => void
 }
+
+type Props = TMapStateToProps & TMapDispatchToProps
 
 class FindFriends extends React.Component<Props> {
 
@@ -70,93 +67,12 @@ const mapStateToProps = (state: TState) => {
     }
 }
 
-export default compose(
-    connect<TMapStateToProps, TMapDispatchToProps>
-    // @ts-ignore
+export default compose<ComponentType>(
+    connect
+    // <TMapStateToProps, TMapDispatchToProps>
     (mapStateToProps, {
         follow, unfollow, getUsers
     }),
     withAuthRedirect
     // @ts-ignore
 )(FindFriends)
-
-// const FindFriendsContainer = withAuthRedirect(connect(mapStateToProps, {
-//     follow, unfollow, getUsers
-// })(FindFriends))
-// export default FindFriendsContainer;
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         follow: (id) => {
-//             dispatch(followAC(id))
-//         },
-//         unfollow: (id) => {
-//             dispatch(unfollowAC(id))
-//         },
-//         setUsers: (users) => {
-//             dispatch(setUsersAC(users))
-//         },
-//         setCurrentPage: (page) => {
-//             dispatch(currentPageAC(page))
-//         },
-//         setTotalCount: (total) => {
-//             dispatch(totalCountAC(total))
-//         },
-//         toggleFetching: (isFetching) => {
-//             dispatch(toggleFetchingAC(isFetching))
-//         }
-//     }
-// }
-
-// [
-//     {
-//         id: 0,
-//         userName: "Yulia Kharisova",
-//         userAvatar: "https://i.imgur.com/vNMhAT4.jpg",
-//         follow: false,
-//         country: "Russia",
-//         city: "Kartaly"
-//     }, {
-//     id: 1,
-//     userName: "Dilovar Salokhov",
-//     userAvatar: "https://i.imgur.com/vNMhAT4.jpg",
-//     follow: false,
-//     country: "Russia",
-//     city: "Kartaly"
-// }, {
-//     id: 2,
-//     userName: "Tatiana Starchikova",
-//     userAvatar: "https://i.imgur.com/vNMhAT4.jpg",
-//     follow: false,
-//     country: "Russia",
-//     city: "Kartaly"
-// }, {
-//     id: 3,
-//     userName: "Nadezhda Zmeykina",
-//     userAvatar: "https://i.imgur.com/vNMhAT4.jpg",
-//     follow: false,
-//     country: "Russia",
-//     city: "Kartaly"
-// }, {
-//     id: 4,
-//     userName: "Damir Shulanov",
-//     userAvatar: "https://i.imgur.com/vNMhAT4.jpg",
-//     follow: false,
-//     country: "Russia",
-//     city: "Kartaly"
-// }, {
-//     id: 5,
-//     userName: "Tatyana Popova",
-//     userAvatar: "https://i.imgur.com/vNMhAT4.jpg",
-//     follow: false,
-//     country: "Russia",
-//     city: "Kartaly"
-// }, {
-//     id: 6,
-//     userName: "Dmitry Ilyin",
-//     userAvatar: "https://i.imgur.com/vNMhAT4.jpg",
-//     follow: false,
-//     country: "Russia",
-//     city: "Kartaly"
-// }
-// ]

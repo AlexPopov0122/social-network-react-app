@@ -1,8 +1,10 @@
 import styles from "./Massages.module.css";
 import Message from "./Massage/Massage";
 import BlockTypingContainer from "./BlockTyping/BlockTypingContainer";
+import {UserMassagesType} from "../../../../Redux/RedusersTypes/dialogsReduserTypes";
+import {FC} from "react";
 
-const Massages = (props) => {
+const Massages: FC<UserMassagesType> = (props) => {
 
     let massagesCreate = props.massages.map((massage, i) => (
         <Message massage={massage} key={i}/>
@@ -12,7 +14,7 @@ const Massages = (props) => {
             <div>
                 {massagesCreate}
             </div>
-            <BlockTypingContainer userId={props.userId}/>
+            <BlockTypingContainer userId={props.id}/>
         </div>
     )
 }

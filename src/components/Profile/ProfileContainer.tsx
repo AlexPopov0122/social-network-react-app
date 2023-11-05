@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import ProfileUser from "./ProfileUser";
-import React, {useEffect} from "react";
+import React, {ComponentType, FC, useEffect} from "react";
 import {
     actionsProfile,
     getUserProfile,
@@ -11,12 +11,13 @@ import {
 } from "../../Redux/Reducers/profile-reducer";
 import Fetching from "../Fetching/Fetching";
 import WithRouter from "../WithRouter/WithRouter";
-import {withAuthRedirect} from "../withAuthRedirect/withAuthRedirect";
+import withAuthRedirect from "../withAuthRedirect/withAuthRedirect";
 import {compose} from "redux";
+import {TState} from "../../Redux/Reducers/redux-store";
 
 const {addPostActionCreator} = actionsProfile;
 
-function Profile(props) {
+const Profile: FC<any> = (props) => {
 
     useEffect(() => {
         let userId = props.router.params.userId;
@@ -33,7 +34,7 @@ function Profile(props) {
     );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: TState) => ({
     posts: state.profilePage.posts,
     userData: state.profilePage.userData,
     userId: state.profilePage.userId,
@@ -41,7 +42,7 @@ const mapStateToProps = (state) => ({
     userStatus: state.profilePage.userStatus,
 })
 
-export default compose(
+export default compose<ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {
         getUserProfile, getUserStatus, updateUserStatus, updateAvatar,

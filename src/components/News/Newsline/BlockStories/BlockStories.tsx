@@ -1,7 +1,8 @@
 import styles from "./BlockStories.module.css"
 import Story from "./Story/Story";
+import {FC} from "react";
 
-const BlockStories = () => {
+const BlockStories: FC = () => {
     return (
         <div className={styles.blockStories}>
             block stories

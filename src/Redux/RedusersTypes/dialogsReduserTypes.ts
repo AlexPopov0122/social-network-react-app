@@ -1,14 +1,13 @@
-import {TActionsAuth} from "../Reducers/auth-reducer";
 
-type DataUsersType = Array<DataUserType>
-type DataUserType = {
+export type DataUsersType = Array<DataUserType>
+export type DataUserType = {
     id: number | null
     companionName: string | null
-    avatarCompanion: string | null
+    avatarCompanion: string | undefined
 }
 
-type UsersMassagesType = Array<UserMassagesType>
-type UserMassagesType = {
+export type UsersMassagesType = Array<UserMassagesType>
+export type UserMassagesType = {
     id: number | null
     massages: Array<UserMassageType>
 }

@@ -1,6 +1,7 @@
 import styles from "./OnlineBar.module.css"
+import {FC} from "react";
 
-const OnlineBar = () => {
+const OnlineBar: FC = () => {
     return (
         <nav className={styles.nav}>
             

@@ -20,7 +20,7 @@ type TDataSubmit = {
     captcha: string | null
 }
 
-export type TDataSubmitKeys = keyof TDataSubmit
+export type DataSubmitLoginKeys = keyof TDataSubmit
 
 const Login: FC<TPropsLogin> = (props) => {
 
@@ -58,17 +58,17 @@ const LoginForm: FC<InjectedFormProps<TDataSubmit, TPropsLoginForm> & TPropsLogi
     const maxLength50 = maxLength(50)
     return (
         <form onSubmit={props.handleSubmit}>
-            {createField<TDataSubmitKeys>("email", "email",
+            {createField<DataSubmitLoginKeys>("email", "email",
                 "text",
                 [requiredLogin], Input, styles.inputField)}
-            {createField<TDataSubmitKeys>("password", "password",
+            {createField<DataSubmitLoginKeys>("password", "password",
                 "password", [requiredPassword, maxLength50], Input, styles.inputField)}
-            {createField<TDataSubmitKeys>(undefined, "rememberMe",
+            {createField<DataSubmitLoginKeys>(undefined, "rememberMe",
                 "checkbox",[], Input, styles.rememberMeField, "Remember me")}
             {
                 props.captchaUrl && <div className={styles.captchaUrlBlock}>
                     <img src={props.captchaUrl} alt="captcha"/>
-                    {createField<TDataSubmitKeys>("Input text on image", "captcha",
+                    {createField<DataSubmitLoginKeys>("Input text on image", "captcha",
                     "text",
                     [requiredCaptcha], Input, styles.inputField)}
                 </div>

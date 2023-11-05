@@ -23,8 +23,7 @@ export const store = configureStore({
 export type TState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
-export type ActionsTypes<T extends {[key: string]: (...arg: any) => any}> =
-    ReturnType<T extends {[key: string]: infer U} ? U : never>
+export type ActionsTypes<T> = T extends {[key: string]: (...arg: any[]) => infer U} ? U : never
 
 export type BaseThunkType<A extends Action, R = void> = ThunkAction<R, TState, unknown, A>
 

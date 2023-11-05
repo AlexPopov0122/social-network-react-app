@@ -1,6 +1,7 @@
 import styles from "./Advertising.module.css"
+import {FC} from "react";
 
-const Advertising = () => {
+const Advertising: FC = () => {
     return (
         <div className={styles.advertising}>
         </div>
