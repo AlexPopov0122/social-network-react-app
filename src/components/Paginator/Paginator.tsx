@@ -11,15 +11,24 @@ type Props = {
 
 export const Paginator: FC<Props> = (props) => {
 
-    const portionNumber: number = Math.ceil(props.currentPage / props.countPages)
+    let countPages: number = props.countPages;
+
+    const portionNumber: number = Math.ceil(props.currentPage / countPages)
 
     const [pageNumber, setPageNumber] = useState<number>(portionNumber)
 
+    let lastPageInPortion: number
+    let firstPageInPortion: number
+
+    if(props.totalCountPages <= 10) {
+        firstPageInPortion = 1
+        lastPageInPortion = props.totalCountPages
+    } else {
+        lastPageInPortion = countPages * pageNumber;
+        firstPageInPortion = lastPageInPortion - 9;
+    }
+
     const pages = [];
-
-    const lastPageInPortion: number = props.countPages * pageNumber;
-    const firstPageInPortion: number = lastPageInPortion - 9;
-
     for (let i = firstPageInPortion; i <= lastPageInPortion; i++) {
         pages.push(i)
     }
@@ -34,11 +43,11 @@ export const Paginator: FC<Props> = (props) => {
     return (
         <div className={styles.paginatorWrapper}>
             {
-                pageNumber > 1 && <button onClick={() => setPageNumber(pageNumber - 1)}>&#9664;</button>
+                firstPageInPortion > 1 && <button onClick={() => setPageNumber(pageNumber - 1)}>&#9664;</button>
             }
             {portion}
             {
-                pageNumber !== props.totalCountPages &&
+                lastPageInPortion !== props.totalCountPages &&
                 <button onClick={() => setPageNumber(pageNumber + 1)}>&#9654;</button>
             }
 

@@ -1,4 +1,4 @@
-type ContactsType = {
+export type ContactsType = {
     facebook: string | null
     website: string | null
     vk: string | null
@@ -19,7 +19,7 @@ export type UserDataType = {
     aboutMe: string | null
     contacts: ContactsType
     lookingForAJob: boolean
-    lookingForAJobDescription: string | null
+    lookingForAJobDescription: string | undefined
     fullName: string | null
     userId: number | null
     photos: PhotosType

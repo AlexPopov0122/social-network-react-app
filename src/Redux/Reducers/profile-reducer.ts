@@ -7,6 +7,7 @@ import {PhotosType, UserDataType} from "../RedusersTypes/authReducerTypes";
 import {ActionsTypes, BaseThunkType} from "./redux-store";
 import {authMe} from "../../api/authMe";
 import {profileAPI} from "../../api/profileAPI";
+import {DataSubmitProfileBF} from "../../components/Profile/Advertising/ProfileBlockForm";
 
 const initialState: InitialState = {
     posts: [
@@ -174,7 +175,7 @@ export const updateAvatar = (photo: string): ThunkType => (dispatch) => {
         })
 }
 
-export const setUserData = (userData: UserDataType): ThunkTypeWithForm => (dispatch, getState) => {
+export const setUserData = (userData: DataSubmitProfileBF): ThunkTypeWithForm => (dispatch, getState) => {
     profileAPI.setUserData(userData)
         .then(response => {
             if (response.data.resultCode === 0) {

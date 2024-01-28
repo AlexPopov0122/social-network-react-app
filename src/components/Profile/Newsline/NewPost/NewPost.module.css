@@ -45,7 +45,8 @@
     border-radius: 50%;
 }
 
-.textInputBlock textarea {
+.blockTextarea {
+    width: 100%;
     outline: none;
     border: none;
     resize: none;

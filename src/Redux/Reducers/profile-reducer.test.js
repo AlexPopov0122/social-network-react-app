@@ -1,4 +1,4 @@
-import profileReducer, {addPostActionCreator, changeUserId} from "./profile-reducer";
+import profileReducer, {actionsProfile} from "./profile-reducer";
 
 let initialState = {
     posts: [
@@ -42,14 +42,14 @@ let initialState = {
 
 describe("Profile reducer test", () => {
     test('check new post text', () => {
-        let action = addPostActionCreator("new post text");
+        let action = actionsProfile.addPostActionCreator("new post text");
         let newState = profileReducer(initialState, action);
 
         expect(newState.posts[0].text).toBe("new post text")
     });
 
     test('change userId', () => {
-        let action = changeUserId(2);
+        let action = actionsProfile.changeUserId(2);
         let newState = profileReducer(initialState, action);
 
         expect(newState.userId).toBe(2)

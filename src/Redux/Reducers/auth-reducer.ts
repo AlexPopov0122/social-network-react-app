@@ -107,7 +107,7 @@ export const logout = (): ThunkType => (dispatch) => {
     authMe.logout()
         .then(
             // @ts-ignore
-            dispatch(actions.setUserAuth(null, null, null, false))
+            dispatch(actionsAuth.setUserAuth(null, null, null, false))
         )
 }
 

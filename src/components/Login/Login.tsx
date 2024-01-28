@@ -1,14 +1,13 @@
 import React, {FC} from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {createField, Input} from "../FieldControls/FieldControls";
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {login, logout} from "../../Redux/Reducers/auth-reducer";
 import {Navigate} from "react-router-dom";
 import styles from "../FieldControls/FieldControls.module.css"
 import classNames from "classnames";
 import {TState} from "../../Redux/Reducers/redux-store";
 
-type TPropsLogin = TMapState & TMapDispatch
 type TPropsLoginForm = {
     captchaUrl: string | null
 }
@@ -22,20 +21,24 @@ type TDataSubmit = {
 
 export type DataSubmitLoginKeys = keyof TDataSubmit
 
-const Login: FC<TPropsLogin> = (props) => {
+const Login: FC = () => {
+
+    const dispatch: any = useDispatch()
+    const isUserAuth = useSelector((state: TState) => state.authUserData.isUserAuth)
+    const captchaUrl = useSelector((state: TState) => state.authUserData.captchaUrl)
 
     const onSubmit = (dataSubmit: TDataSubmit) => {
-        props.login(dataSubmit.email, dataSubmit.password, dataSubmit.rememberMe, dataSubmit.captcha)
+        dispatch(login(dataSubmit.email, dataSubmit.password, dataSubmit.rememberMe, dataSubmit.captcha))
     }
     return (
         <>
             {
-                props.isUserAuth
+                isUserAuth
                     ? <Navigate to={"/profile"}/>
                     : (<div className={classNames(styles.loginWrapper)}>
                             <div className={styles.loginForm}>
                                 <h1>Login</h1>
-                                <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
+                                <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
                             </div>
                         </div>
                     )
@@ -93,19 +96,4 @@ const LoginReduxForm = reduxForm<TDataSubmit, TPropsLoginForm>({
     form: "loginForm"
 })(LoginForm);
 
-type TMapState = {
-    isUserAuth: boolean
-    captchaUrl: string | null
-}
-type TMapDispatch = {
-    login: (email: string, password: string, rememberMe: boolean, captcha: any) => void
-}
-
-const mapStateToProps = (state: TState): TMapState => {
-    return {
-        isUserAuth: state.authUserData.isUserAuth,
-        captchaUrl: state.authUserData.captchaUrl
-    }
-}
-
-export default connect(mapStateToProps, {login} as TMapDispatch)(Login);
+export default Login

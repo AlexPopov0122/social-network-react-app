@@ -14,10 +14,35 @@ import WithRouter from "../WithRouter/WithRouter";
 import withAuthRedirect from "../withAuthRedirect/withAuthRedirect";
 import {compose} from "redux";
 import {TState} from "../../Redux/Reducers/redux-store";
+import {NavigateFunction} from "react-router-dom";
+import {DataSubmitProfileBF} from "./Advertising/ProfileBlockForm";
+import {UserDataType} from "../../Redux/RedusersTypes/authReducerTypes";
+
+export type withRouterProps = {
+    router: {
+        location: Location;
+        navigate: NavigateFunction;
+        params: Record<"userId", string | undefined>;
+    };
+}
+export type MapStatePropsProfileC = ReturnType<typeof mapStateToProps> & {
+    userData: UserDataType
+}
+
+export type MapDispatchPropsProfileC = {
+    getUserProfile: (userId: string | undefined) => void
+    getUserStatus: (userId: string | undefined) => void
+    updateUserStatus: (statusText: string) => void
+    updateAvatar : (file: File) => void
+    setUserData: (userData: DataSubmitProfileBF) => void
+    addPostActionCreator: (newPostText: string) => void
+}
+
+type Props = MapStatePropsProfileC & MapDispatchPropsProfileC & withRouterProps
 
 const {addPostActionCreator} = actionsProfile;
 
-const Profile: FC<any> = (props) => {
+const Profile: FC<Props> = (props) => {
 
     useEffect(() => {
         let userId = props.router.params.userId;
@@ -50,7 +75,3 @@ export default compose<ComponentType>(
     }),
     WithRouter
 )(Profile);
-
-// const ProfileContainer = withAuthRedirect(connect(mapStateToProps,
-//     {getUserProfile})(WithRouter(Profile)))
-// export default ProfileContainer;

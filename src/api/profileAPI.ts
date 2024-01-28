@@ -1,5 +1,6 @@
 import {PhotosType, UserDataType} from "../Redux/RedusersTypes/authReducerTypes";
 import {ApiT, instance} from "./api";
+import {DataSubmitProfileBF} from "../components/Profile/Advertising/ProfileBlockForm";
 
 type PhotosApiT = {
     photos: PhotosType
@@ -18,7 +19,7 @@ export const profileAPI = {
         return instance.put<ApiT>(`profile/status`, {status})
     },
 
-    setUserData(userData: UserDataType) {
+    setUserData(userData: DataSubmitProfileBF) {
         return instance.put<ApiT>(`profile`, {...userData})
     },
 

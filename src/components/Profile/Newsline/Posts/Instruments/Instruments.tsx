@@ -1,6 +1,12 @@
 import styles from "./Instruments.module.css";
+import {FC} from "react";
 
-const Instruments = (props) => {
+type Props = {
+    numberOfLikes: string
+    numberOfComments: string
+}
+
+const Instruments: FC<Props> = (props) => {
     return (
         <div className={styles.instruments}>
             <div className={styles.likes}>

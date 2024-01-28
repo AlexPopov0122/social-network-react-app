@@ -21,6 +21,9 @@ export const getIsFetching = (state: TState) => {
 export const getDisabledFollowButton = (state: TState) => {
     return state.findFriendsPage.disabledFollowButton
 }
+export const getFilter = (state: TState) => {
+    return state.findFriendsPage.filter
+}
 
 export const getFoundUsersSelector = createSelector(getFoundUsers,
     (users) => {

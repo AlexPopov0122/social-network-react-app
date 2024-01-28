@@ -1,6 +1,12 @@
 import styles from "./BodyPost.module.css"
+import {FC} from "react";
 
-const BodyPost = (props) => {
+type Props = {
+    textPost: string
+    files: Array<string>
+}
+
+const BodyPost: FC<Props> = (props) => {
 
     let createFiles = props.files.map((file, i) => (
         <img key={i} src={file} alt="imagePost"/>

@@ -1,6 +1,12 @@
 import styles from "../Advertising.module.css";
+import {FC} from "react";
 
-const Contacts = (props) => {
+type Props = {
+    socialab: string
+    socialabLink: string | null
+}
+
+const Contacts: FC<Props> = (props) => {
     return (
         <div className={styles.contact}>
             <span className={styles.contactHeader}>{props.socialab}: </span>

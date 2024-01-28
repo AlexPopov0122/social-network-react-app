@@ -1,7 +1,15 @@
 import styles from "../ProfileBlockForm.module.css";
 import {Field} from "redux-form";
+import {FC} from "react";
+import {createField, Textarea} from "../../../FieldControls/FieldControls";
+import {DataSubmitProfileBFKeys} from "../ProfileBlockForm";
 
-const ContactsForm = (props) => {
+type Props = {
+    socialab: string
+    socialabLink: string | null | undefined
+}
+
+const ContactsForm: FC<Props> = (props) => {
     return (
         <div className={styles.contact}>
             <span className={styles.contactHeader}>{props.socialab}: </span>

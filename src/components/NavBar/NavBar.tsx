@@ -12,6 +12,8 @@ const NavBar: FC = () => {
 
             <NavLink to="/dialogs"
                      className={setActive}>Messages</NavLink>
+            <NavLink to="/Chat"
+                     className={setActive}>Chat</NavLink>
 
             <NavLink to="/news" className={setActive}>News <span>(in developing)</span> </NavLink>
 

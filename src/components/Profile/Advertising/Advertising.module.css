@@ -29,7 +29,7 @@
     margin-top: 18px;
 }
 
-.headerlookingForAJob, .headerAboutMe, .lookingForAJobDescriptionHeader, .contactHeader {
+.headerLookingForAJob, .headerAboutMe, .lookingForAJobDescriptionHeader, .contactHeader {
     color: #222222;
     font-weight: 600;
 }

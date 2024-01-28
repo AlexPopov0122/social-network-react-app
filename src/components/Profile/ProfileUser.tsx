@@ -2,8 +2,12 @@ import Advertising from "./Advertising/Advertising";
 import Newsline from "./Newsline/Newsline";
 import styles from "./ProfileUser.module.css"
 import ProfileBlock from "./ProfileBlock/ProfileBlock";
+import {FC} from "react";
+import {MapDispatchPropsProfileC, MapStatePropsProfileC, withRouterProps} from "./ProfileContainer";
 
-const ProfileUser = (props) => {
+type Props = MapStatePropsProfileC & MapDispatchPropsProfileC & withRouterProps
+
+const ProfileUser: FC<Props> = (props) => {
     return (
         <div className={styles.mainContent}>
             <ProfileBlock userData={props.userData}

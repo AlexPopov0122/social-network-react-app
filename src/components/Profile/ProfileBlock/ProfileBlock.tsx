@@ -1,11 +1,22 @@
 import styles from "./ProfileBlock.module.css";
 import StatusWithUseState from "./Status/StatusWithUseState";
+// @ts-ignore
 import avatarDefault from "./../../../assets/images/avatar-default-photo.png";
+import {ChangeEvent, FC} from "react";
+import {UserDataType} from "../../../Redux/RedusersTypes/authReducerTypes";
 
-const ProfileBlock = (props) => {
+type Props = {
+    userData: UserDataType | null | undefined
+    userStatus: string
+    updateUserStatus: (statusText: string) => void
+    isOwnProfile: boolean
+    updateAvatar : (file: File) => void
+}
 
-    const onChangeAvatar = (e) => {
-        if (e.target.files.length) {
+const ProfileBlock: FC<Props> = (props) => {
+
+    const onChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length) {
             props.updateAvatar(e.target.files[0])
         }
     }
@@ -20,13 +31,19 @@ const ProfileBlock = (props) => {
 
             <div className={styles.blockUserName}>
                 <div className={styles.avatarUser}>
-                    <img src={props.userData.photos.small || avatarDefault} alt="avatar"/>
+                    {
+                        props.userData && <img src={props.userData.photos.small || avatarDefault} alt="avatar"/>
+                    }
                     {
                         props.isOwnProfile && <input onChange={onChangeAvatar} type="file" name="Choose photo"/>
                     }
                 </div>
                 <div className={styles.userName}>
-                    <div className={styles.name}>{props.userData.fullName}</div>
+                    <div className={styles.name}>
+                        {
+                            props.userData && props.userData.fullName
+                        }
+                    </div>
                     <StatusWithUseState isOwnProfile={props.isOwnProfile}
                                         userStatus={props.userStatus} updateUserStatus={props.updateUserStatus}/>
                 </div>

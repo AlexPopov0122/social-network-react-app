@@ -15,6 +15,7 @@ const FindFriendsContainer = React.lazy(() => import("./components/FindFriends/F
 const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"));
 const Login = React.lazy(() => import("./components/Login/Login"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
+const Chat = React.lazy(() => import("./components/Chat/Chat"));
 
 type Props = {
     getAuthMe: () => void
@@ -47,6 +48,8 @@ const App: FC<Props> = (props) => {
                         <Route path="/" element={<Navigate to={'/login'}/>}/>
                         <Route path="/dialogs/*"
                                element={<Dialogs/>}/>
+                        <Route path="/chat/*"
+                               element={<Chat/>}/>
                         <Route path="/profile/:userId?"
                                element={<ProfileContainer/>}/>
                         <Route path="/news/*" element={<News/>}/>

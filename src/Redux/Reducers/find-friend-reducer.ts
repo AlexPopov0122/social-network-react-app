@@ -1,19 +1,25 @@
-import {createAsyncThunk, createSlice, Dispatch, PayloadAction, Slice} from "@reduxjs/toolkit";
-import {InitialStateType} from "../RedusersTypes/findFriendsReducerTypes";
+import {AnyAction, createAsyncThunk, createSlice, Dispatch, PayloadAction, Slice} from "@reduxjs/toolkit";
+import {FilterType, InitialStateType} from "../RedusersTypes/findFriendsReducerTypes";
 import {UsersAPI} from "../../api/getUsers";
 import {followAPI} from "../../api/followAPI";
+import {BaseThunkType} from "./redux-store";
 
 
 export const getUsers = createAsyncThunk(
     "findFriendsReducer/getUsers",
-    async ([currentPage, count]: Array<number>, {rejectWithValue, dispatch}) => {
+    async ([currentPage, count, filter, isNeedFetching = false]: [number, number, FilterType, boolean?], {rejectWithValue, dispatch}) => {
+        if(isNeedFetching) {
+            dispatch(toggleFetching({isFetching: true}))
+        }
+        dispatch(setFilter({filter}))
         dispatch(setCurrentPage({page: currentPage}))
-        dispatch(toggleFetching({isFetching: true}))
         try {
-            const data = await UsersAPI.getUsers(currentPage, count)
-            dispatch(toggleFetching({isFetching: false}))
+            const data = await UsersAPI.getUsers(currentPage, count, filter)
             dispatch(setUsers({users: data.items}))
             dispatch(setTotalCount({total: data.totalCount}))
+            if(isNeedFetching) {
+                dispatch(toggleFetching({isFetching: false}))
+            }
             if (data.error) {
                 throw new Error("Some error.")
             }
@@ -21,9 +27,8 @@ export const getUsers = createAsyncThunk(
         } catch (error) {
             return rejectWithValue(error)
         }
-
     });
-export const follow = (userId: number) => async (dispatch: any) => {
+export const follow = (userId: number) => async (dispatch: Dispatch) => {
     dispatch(toggleFollowDisabledStatus({userId, isFetching: true}))
     const data = await followAPI.follow(userId)
     if (data.resultCode === 0) {
@@ -48,13 +53,17 @@ const initialState: InitialStateType = {
     totalCountPages: 0,
     isFetching: true,
     disabledFollowButton: [],
+    filter: {
+        term: "",
+        friend: null
+    }
 };
 
 const findFriendsReducer: Slice<InitialStateType> = createSlice({
     name: "findFriendsReducer",
     initialState,
     reducers: {
-        setUsers: (state, action: PayloadAction<any>) => {
+        setUsers: (state, action) => {
             state.users = action.payload.users
         },
         setFollowStatus: (state, action) => {
@@ -77,6 +86,9 @@ const findFriendsReducer: Slice<InitialStateType> = createSlice({
         },
         toggleFetching: (state, action) => {
             state.isFetching = action.payload.isFetching
+        },
+        setFilter: (state, action) => {
+            state.filter = action.payload.filter
         }
     },
     extraReducers: {
@@ -100,7 +112,8 @@ export const {
     setCurrentPage,
     setTotalCount,
     toggleFetching,
-    setFollowStatus
+    setFollowStatus,
+    setFilter
 } = actions;
 type SetUsersT = typeof setUsers
 export default reducer;

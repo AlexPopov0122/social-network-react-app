@@ -1,5 +1,5 @@
 import {instance} from "./api";
-import {UsersType} from "../Redux/RedusersTypes/findFriendsReducerTypes";
+import {FilterType, UsersType} from "../Redux/RedusersTypes/findFriendsReducerTypes";
 
 type UsersApiT = {
     items: Array<UsersType>,
@@ -8,8 +8,8 @@ type UsersApiT = {
 }
 
 export const UsersAPI = {
-    getUsers(page: number, count: number) {
-        return instance.get<UsersApiT>(`users?page=${page}&count=${count}`)
+    getUsers(page: number, count: number, filter: FilterType) {
+        return instance.get<UsersApiT>(`users?page=${page}&count=${count}&term=${filter.term}&friend=${filter.friend}`)
             .then(response => response.data)
     }
 }
