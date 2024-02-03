@@ -1,115 +1,105 @@
-import {FC, useEffect, useState} from "react";
-import {Button} from "antd";
+import React, {useEffect, useRef, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {TState} from "../../Redux/Reducers/redux-store";
+import {sendMessage, startMessagesListening, stopMessagesListening} from "../../Redux/Reducers/chat-reducer";
+import {ChatMessageAPIType} from "../../api/chatAPI";
+import {Button, Form, Input} from "antd";
+import TextArea from "antd/es/input/TextArea";
 
-const Chat: FC = () => {
-    const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
+const ChatPage: React.FC = () => {
+    return <div>
+        <Chat/>
+    </div>
+}
+
+const Chat: React.FC = () => {
+
+    const dispatch = useDispatch()
+
+
+    const status = useSelector((state: TState) => state.chat.status)
 
     useEffect(() => {
-        let ws: WebSocket
-
-        const closeHandler = () => {
-            console.log("close ws")
-            setTimeout(createChannel, 3000)
-        }
-        function createChannel() {
-            ws?.removeEventListener("close", closeHandler)
-            ws?.close()
-            ws = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
-            ws.addEventListener("close", closeHandler)
-            setWsChannel(ws)
-        }
-        createChannel()
-
+        // @ts-ignore
+        dispatch(startMessagesListening())
         return () => {
-            ws.removeEventListener("close", closeHandler)
-            ws.close()
+            // @ts-ignore
+            dispatch(stopMessagesListening())
         }
     }, [])
 
     return <div>
-        <Messages wsChannel={wsChannel}/>
-        <AddMessagesForm wsChannel={wsChannel} />
+        {status === 'error' && <div>Some error occured. Please refresh the page</div>}
+        <>
+            <Messages/>
+            <AddMessageForm/>
+        </>
     </div>
 }
 
-type ChatType =  {
-    message: string
-    photo: string
-    userId: number
-    userName: string
-}
+const Messages: React.FC<{}> = ({}) => {
+    const messages = useSelector((state: TState) => state.chat.messages)
+    const messagesAnchorRef = useRef<HTMLDivElement>(null);
+    const [isAutoScroll, setIsAutoScroll] = useState(true)
 
-
-const Messages: FC<{wsChannel: WebSocket | null}> = ({wsChannel}) => {
-    const [messages, setMessages] = useState<ChatType[]>([])
-
-    const messageHandler = (e: MessageEvent) => {
-        const newMessage = JSON.parse(e.data)
-        setMessages((prevMassages) => {
-            return [...prevMassages, ...newMessage]
-        })
+    const scrollHandler = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const element = e.currentTarget;
+        if (Math.abs( (element.scrollHeight - element.scrollTop) - element.clientHeight ) < 300)
+        {
+            !isAutoScroll && setIsAutoScroll(true)
+        } else {
+            isAutoScroll && setIsAutoScroll(false)
+        }
     }
+
     useEffect(() => {
-        if(wsChannel !== null) {
-            wsChannel?.addEventListener("message", messageHandler)
+        if (isAutoScroll) {
+            messagesAnchorRef.current?.scrollIntoView({behavior: 'smooth'})
         }
+    }, [messages])
 
-        return () => {
-            wsChannel?.removeEventListener("message", messageHandler)
-        }
-    }, [wsChannel])
-
-    return <div style={{height: "600px", overflowY: "auto"}}>
-        {messages.map((m, i) => <Message message={m} key={i}/>)}
+    return <div style={{height: '400px', overflowY: 'auto'}} onScroll={scrollHandler}>
+        {messages.map((m, index) => <Message key={m.id} message={m}/>)}
+        <div ref={messagesAnchorRef}></div>
     </div>
 }
 
-const Message: FC<{message: ChatType}> = ({message}) => {
+
+const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo( ({message}) => {
     return <div>
-        <img style={{width: "50px"}} src={message.photo} alt="avatar"/>
-        <b>{message.userName}</b>
-        <div>{message.message}</div>
+        <img src={message.photo} style={{width: '30px'}}/> <b>{message.userName}</b>
+        <br/>
+        {message.message}
         <hr/>
     </div>
-}
+})
 
-const AddMessagesForm: FC<{wsChannel: WebSocket | null}> = ({wsChannel}) => {
-    const [message, setMessage] = useState("")
-    const [readyStatus, setReadyStatus] = useState<"ready" | "pending">("pending")
 
-    useEffect(() => {
-        let openHandler = () => {
-            setReadyStatus("ready")
-        }
+const AddMessageForm: React.FC<{}> = () => {
+    const [message, setMessage] = useState('')
+    const dispatch = useDispatch()
 
-        const closeHandler = () => {
-            setReadyStatus("pending")
-        }
-            wsChannel?.addEventListener("open", openHandler)
-            wsChannel?.addEventListener("close", closeHandler)
+    const status = useSelector((state: TState) => state.chat.status)
 
-        return () => {
-            wsChannel?.removeEventListener("open", openHandler)
-            wsChannel?.removeEventListener("close", closeHandler)
-        }
-    }, [wsChannel])
 
-    const sendMessage = () => {
-        if(!message) {
+    const sendMessageHandler = () => {
+        if (!message) {
             return
         }
-        wsChannel?.send(message)
-        setMessage("")
+        // @ts-ignore
+        dispatch(sendMessage(message))
+        setMessage('')
     }
 
     return <div>
-        <div>
-            <textarea onChange={(e) => setMessage(e.currentTarget.value)} value={message}></textarea>
+        <div style={{margin: "15px 0 5px"}}>
+            <TextArea autoSize={{ minRows: 2}} placeholder="Enter message"
+                      onChange={(e) => setMessage(e.currentTarget.value)} value={message}></TextArea>
         </div>
         <div>
-            <Button type={"primary"} onClick={sendMessage} disabled={wsChannel === null || readyStatus !== "ready"}>Send</Button>
+            <Button type={"primary"} disabled={status !== 'ready'} onClick={sendMessageHandler}>Send</Button>
         </div>
     </div>
 }
 
-export default Chat
+export default ChatPage

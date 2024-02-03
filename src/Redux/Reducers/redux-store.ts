@@ -6,6 +6,7 @@ import findFriendsReducer from "./find-friend-reducer";
 import authReducer from "./auth-reducer";
 // import thunkMiddleware from "redux-thunk";
 import {reducer as formReducer} from "redux-form";
+import chatReducer from "./chat-reducer";
 
 
 const reducers = {
@@ -13,7 +14,8 @@ const reducers = {
     dialogsPage: dialogsReducer,
     findFriendsPage: findFriendsReducer,
     authUserData: authReducer,
-    form: formReducer
+    form: formReducer,
+    chat: chatReducer
 };
 
 

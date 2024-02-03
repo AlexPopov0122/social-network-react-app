@@ -24,6 +24,7 @@
     "react-scripts": "5.0.1",
     "redux-form": "^8.3.10",
     "typescript": "^4.9.5",
+    "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },
   "jest": {
@@ -58,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/redux-form": "^8.3.6"
+    "@types/redux-form": "^8.3.6",
+    "@types/uuid": "^9.0.8"
   }
 }
